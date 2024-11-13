@@ -7,11 +7,13 @@ import { UsersModule } from './modules/users/users.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './core/transform.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
+import { ArtistsModule } from './modules/artists/artists.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
+    ArtistsModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -21,8 +23,7 @@ import { AuthModule } from './modules/auth/auth.module';
         uri: configService.get<string>('MONGODB_URI'),
       }),
       inject: [ConfigService],
-    }),
-    UsersModule
+    })
   ],
   controllers: [AppController],
   providers: [

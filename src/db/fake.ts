@@ -1,4 +1,4 @@
-const songs = [
+export const songs = [
     {
         "title": "APT.",
         "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/10/18/1/8/a/e/1729211353297_500.jpg",
@@ -1791,7 +1791,7 @@ const songs = [
     }
 ]
 
-const artist = [
+export const artists = [
     "ROSÉ",
     "Bruno Mars",
     "JENNIE",
