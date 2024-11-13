@@ -13,7 +13,7 @@ export class UsersService {
     const { password, ...rest } = createUserDto;
     const passwordHash = await hashPassword(password);
 
-    const newUser = new this.userModel({
+    const newUser = await this.userModel.create({
       ...rest,
       password: passwordHash,
     });
@@ -28,6 +28,11 @@ export class UsersService {
 
   async findOne(id: string) {
     const user = await this.userModel.findById(id);
+    return user;
+  }
+
+  async findByEmail(email: string) {
+    const user = await this.userModel.findOne({ email });
     return user;
   }
 
