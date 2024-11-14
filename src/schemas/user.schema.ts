@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { AccountProduct, AccountType } from 'src/constants/enum';
+import { UserPlaylist } from './user.playlist.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -18,13 +20,20 @@ export class User {
     country: string;
 
     @Prop()
-    images: string;
-
-    @Prop()
-    account_type: string;
+    avatar_url: string;
 
     @Prop({ default: 0 })
     followers: number;
+
+    @Prop({ enum: AccountProduct, default: AccountProduct.FREE })
+    product: string;
+
+    @Prop({ enum: AccountType, default: AccountType.LOCAL })
+    account_type: string;
+
+    // RELATIONSHIP
+    @Prop({ type: [{ type: Types.ObjectId, ref: UserPlaylist.name }] })
+    userPlaylists: UserPlaylist[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

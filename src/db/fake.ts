@@ -1788,6 +1788,238 @@ export const songs = [
         ],
         "lyric": "[Verse 1]\nHome alone, tryin' not to eat\nDistract myself with pornography\nI hate the way she looks at me\nI can't stand the dialogue, she would never be\nThat satisfied, it's a male fantasy\nI'm goin' back to therapy\n\n[Chorus]\n'Cause I loved you then and I love you now\nAnd I don't know how\nGuess it's hard to know when nobody else comes around\nIf I'm getting over you\nOr just pretending to\nBe alright, convince myself I hate you\n\n[Interlude]\n(Want me to sing in here?)\n(Okay)\n\n[Verse 2]\nI got a call from a girl I used to know\nWe were inseparablе years ago\nThought we'd get along, but it wasn't so\nAnd it's all I think about whеn I'm behind the wheel\nI worry this is how I'm always gonna feel\nBut nothing lasts, I know the deal\n\n\n[Chorus]\nBut I loved you then and I love you now\nAnd I don't know how\nGuess it's hard to know when nobody else comes around\nIf I'm getting over you\nOr just pretending to\nBe alright, convince myself I hate you\n\n[Outro]\nCan't get over you\nNo matter what I do\nI know I should, but I could never hate you",
         "url_media": "https://a01.nct.vn/Unv_Audio475/MaleFantasy-BillieEilish-14762510.mp3?st=BADoaV-RrejaIyj0CxQcRw&e=1730942881&a=1&p=0&r=0141b50be655d208fdcdf5d49be7c55e"
+    },
+    {
+        "title": "Ca Khúc Cuối",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Ca Khúc Cuối do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/CaKhucCuoi-Wxrdie-16696442.mp3?st=Ax2On0CKvPXqg_OfbhlM2w&e=1732107706&a=1&p=0&r=3335999d3edc5e6adb775316278a211d"
+    },
+    {
+        "title": "Thèn Chóa",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "KayC",
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Thèn Chóa do ca sĩ KayC, Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/ThenChoa-WxrdieKayC-16696443.mp3?st=E86EfD_yNoT3L8CpeCXqxA&e=1732105895&a=1&p=0&r=4344ee700fa8e1a8a075deb46ca531f6"
+    },
+    {
+        "title": "Băng Qua Cầu Giấy",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/11/d/0/d/4/1731340774750_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "RPT JasonDilla"
+        ],
+        "lyric": "Ver Wxrdie:\nBăng qua Cầu Giấy, anh chẳng nhận ra lối về \nHomie rủ anh pull up qua chill làm vài khói đê \nCó thể chỉ vì muốn em vui nên trông anh hơi giống hề \nNhưng riêng câu \"yêu em\", anh sẽ nói khi không phê \nĐi xe trên quốc lộ, lao thật nhanh không đoái hoài \nVít ga tốc độ, anh chẳng muốn phải ngoái lại \nTừng câu em vừa nói khiến con tim này tái dại \nEm nói rất dài, nhưng chốt lại bằng câu \"bye bye\" \nAnh không cần nghe thêm, anh không cần phải quan tâm \nAnh có thể đợi em, luôn từ nay luôn sang năm \nỐm đau một chút thôi, em cũng không cần phải sang thăm \nBapeboy Camo, 10 gram GK như lang băm \nĐừng lo Covid vì anh vẫn hút như nam châm \nAnh chỉ lo rằng sẽ vẫn cô đơn dù bao nhiêu gian truân \nĐừng nhắn thêm tin nào cho anh, Insta anh không *** nhận \nChẳng thể nói với em rằng Lonely Stoni này là đang hâm\nPhong Khin đi mấy nốt nhạc đưa anh ra khỏi chốn này \nTự hứa với bản thân là phải quên em trong 4 ngày \nAnh sẽ phải đối mặt thôi, anh không muốn phải trốn chạy \nĐừng để anh thấy em với ai khác, baby anh không muốn vậy \nVùi mình trong studio, làn khói thật to, anh không muốn dậy \nChỉ muốn ai đó đưa anh đi, một thiên thần nào đó có thể xuống đây \nQuấn thêm một cây nén phải thật chắc và điếu phải luôn đầy \nĐôi ba lời ca về em, anh ngân nga lúc cuối ngày \nBăng qua Cầu Giấy, anh chẳng nhận ra lối về \nHomie này gọi điện qua, làm vài khói đê \nCó thể chỉ vì muốn em vui nên trông anh hơi giống hề \nNhưng riêng câu \"yêu em\", anh sẽ nói khi không phê \nTít xa trên quốc lộ, lao thật nhanh không đoái hoài \nVít ga tốc độ, anh chẳng muốn phải ngoái lại \nTừng câu em vừa nói khiến con tim này tái dại \nEm nói rất dài, nhưng chốt lại bằng câu \"bye bye\" \n\nVer JasonDilla:\n12 giờ đêm qua nghe tiếng em kêu thất thanh \nTrong cơn mộng du, em nói rằng yêu nhất anh \n12 giờ đêm nay, anh đang trên xe rất lạnh \nVì biết rằng chẳng đi về đâu, chuyện của ta bất thành \nEm chỉ đến khi anh có rất nhiều, \nKhông còn gì, em bỏ đi rất nhanh \nAnh đã biết em không phải miền đất lành \nXin thông báo là bây giờ em mất anh \nĐể anh cùng những giai điệu đang chắp cánh \nHòa vào những vì sao lấp lánh \nChúng ta chỉ đến đây, coi như max cảnh \nKhông muốn nói bye, nhưng mà thôi chắc đành \nKhông thể nói chi, anh không biết phải nói gì \nCho vào vali, xong rồi anh lại gói đi \nBao yêu thương nhưng sao đã vội quên \nĐể nỗi buồn đi cùng anh, xa rời em",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/BangQuaCauGiay-WxrdieRPTJasonDilla-16690253.mp3?st=ABb_b_HWQxZnG-d42LMtwQ&e=1732106490&a=1&p=0&r=ac36ab769149ace0eb4ba7b8ef63cf9d"
+    },
+    {
+        "title": "Đến Thăm Anh Đi",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Đến Thăm Anh Đi do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/DenThamAnhDi-Wxrdie-16696445.mp3?st=gl9eN2045qDTqH1qpKy3QA&e=1732106004&a=1&p=0&r=4f4d63c095145502a92e33bf64b9bd76"
+    },
+    {
+        "title": "Life Of A Hxstler",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Life Of A Hxstler do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/LifeOfAHxstler-Wxrdie-16696446.mp3?st=4mbU962OwjoRIBdqun5Qdw&e=1732105828&a=1&p=0&r=78509ba194fc937dcf1ea80f1cf707d5"
+    },
+    {
+        "title": "Lonely Stonie",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Lonely Stonie do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/LonelyStonie-Wxrdie-16696447.mp3?st=HdxymxoDNm21PmSOppZBHg&e=1732105818&a=1&p=0&r=8adbe48d3898573eba7e80087567f3d4"
+    },
+    {
+        "title": "Mấy Đứa Nhóc",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Mấy Đứa Nhóc do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/MayDuaNhoc-Wxrdie-16696448.mp3?st=BQ3k56iR-H9HA8wx6XyQxw&e=1732105809&a=1&p=0&r=877e9c5e5b5e9d80f5150321c6e880f4"
+    },
+    {
+        "title": "Trở Về",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "JustaTee",
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Trở Về do ca sĩ JustaTee, Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/TroVe-WxrdieJustatee-16696449.mp3?st=m7SP-gx6wqM4qSPSLBas1A&e=1732105883&a=1&p=0&r=dd8a0be8aea8464fa0437845298c0c8d"
+    },
+    {
+        "title": "Pray For",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "KayC",
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Pray For do ca sĩ KayC, Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/PrayFor-WxrdieKayC-16696450.mp3?st=5laZkwZnQOGwlQQTh4qbVQ&e=1732105863&a=1&p=0&r=9da8b02370c8c0afd4332f53e8f8170a"
+    },
+    {
+        "title": "Bởi Vì",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Bởi Vì do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/BoiVi-Wxrdie-16696451.mp3?st=AkWvsMCW9lpGDhSXVbS7kw&e=1732105800&a=1&p=0&r=3b662f6526ce32eacd2e744eb45bc008"
+    },
+    {
+        "title": "Tim Anh Ghen",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "LVK",
+            "Dangrangto"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Tim Anh Ghen do ca sĩ Wxrdie, LVK, Dangrangto, V.A trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/TimAnhGhen-WxrdieDangrangtoTeuYungBoyLVK-16696453.mp3?st=mH-E2P-hTOpQ0PnjtVwo7A&e=1732107680&a=1&p=0&r=cdc2a1876907caed04e12e7455e402a1"
+    },
+    {
+        "title": "Get Money",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "Thai VG"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Get Money do ca sĩ Wxrdie, Thai VG trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/GetMoney-WxrdieThaiVG-16696454.mp3?st=oQJbWmljLPuoWXBt1ONfDw&e=1732106040&a=1&p=0&r=88bc087feb22adcae036965ccf090117"
+    },
+    {
+        "title": "Anh Freestyle",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Gill",
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Anh Freestyle do ca sĩ Gill, Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/AnhFreestyle-WxrdieGill-16696455.mp3?st=cm7i_IjLhSNOaW0hre5u-A&e=1732105850&a=1&p=0&r=43e6378336030714bb25d1de226cf5ab"
+    },
+    {
+        "title": "Đau Đầu",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/10/23/0/6/b/2/1729657738885_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "Yeah, yeah, yeah\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nAnh chỉ muốn hustle hard\nĐể mình mau giàu\nNghĩ quá nhiều khiến anh bị đau\nCòn mấy thằng anh em đang ở sau\nKhông có thời gian để mà âu sầu\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nAnh chỉ muốn hustle hard\nĐể mình mau giàu\nNghĩ quá nhiều khiến anh bị đau\nCòn mấy thằng anh em\nĐang ở sau tàu\nKhông có thời gian\nĐể mà âu sầu yeah\nKhi anh xuất hiện ở trên social\nAll of your brand muốn được promo\nAll of your friends want to follow\nDj inbox xin cả vocal\nWhen I pull up\nI'mma *** all the club\nI told my bro, senda loco\nI told my bro\nLet me roll one\nNếu mày không phải đồng minh, ok hold on\nIn studio nhạc tao biên soạn\nBa mươi con flow\nNạp vào băng như từng viên đạn\nNhưng sự thật bị chúng nó xuyên tạc\nLàm bọn ruồi trên mạng\nChúng nó bu vào đến điên loạn\nTừ ngày đến tối\nChỉ lên mạng xỉa xói\nÍt thằng nào làm\nMà đa phần là chỉ nói\nBước ra từ trong khu rừng tối\nAnh em tao lại kiếm về\nVà chia thành từng gói, yeah\nNăm trăm tao nhập vào nhà kho, yeah\nNăm trăm tao đưa cho bà bô, yeah\nNăm trăm tao xếp vào trong ba lô\nNăm mươi tao tiêu\nNăm mươi tao chia cho my bros\nBọn nó cứ đứng đó\nĐể mà ngó vào\nĐàn em tao quần bó vào\nWave Alpha lùa mày như là gió Lào\nĐưa ra quyết định thông minh hơn\nAnh em trông tinh khôn\nYou gonna know what the *** going on\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nAnh chỉ muốn hustle hard\nĐể mình mau giàu\nNghĩ quá nhiều khiến anh bị đau\nCòn mấy thằng anh em đang ở sau\nKhông có thời gian để mà âu sầu\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nAnh chỉ muốn hustle hard\nĐể mình mau giàu\nNghĩ quá nhiều khiến anh bị đau\nCòn mấy thằng anh em\nĐang ở sau tàu\nKhông có thời gian\nĐể mà âu sầu yeah\nChúng nó bon chen\nHết cái để bốc phét\nLại lấy tao ra làm content\nVài cái comment\nChúng nó muốn bôi nhọ bọn tao\nBằng vài cái comment\nKhông đại diện cho gen gì cả\nCũng không phải hình mẫu lý tưởng\nCho con em\nChỉ là những cậu bé\nTao bước ra từ con hẻm\nSh Ý vẫn sáng đèn ở trong đêm\nBiết thời buổi cần like\nVà tao biết thời buổi cần tim\nChúng mày quên mất mình là ai\nTao chỉ biết mỉm cười rồi lặng im\nHai lần của một phần hai\nGiúp tao được kết nối với thần linh\nPhải sám hối cho những lần sai\nVà phải tự ban thêm cho mình\nMột lần tin\nAnh em xã đoàn\n24/7 vẫn luôn luôn sẵn sàng\nPull up làm con show\nQuá là dã man\nTình cảm anh em\nĐi lên như giá vàng\nNhìn chúng nó quá xàm\nNhững gì fake\nThì trước sau cũng đã tàn\nKhỏi phải nói nhiều\nVề những thứ đã làm\nChỉ được bám theo\nKế hoạch ta đã bàn\nVà bầy chó vẫn phải ăng ẳng\nCùng nhịp beat vẫn đập văng vẳng\nChẳng có chi mà phải căng thẳng\nDoanh thu vẫn ngày một tăng dần\nDòng máu Việt Nam, đích tôn họ Phạm\nThắp hương cúng tổ tiên\nMỗi ngày trăng rằm\nHàng tá thứ phải lo\nNhưng vẫn luôn phải nhớ\nNhững gì ba má của tao\nThường căn dặn\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nNghĩ quá nhiều khiến anh bị đau\nAnh chỉ muốn hustle hard\nĐể mình mau giàu\nNghĩ quá nhiều khiến anh bị đau\nCòn mấy thằng anh em đang ở sau\nKhông có thời gian để mà âu sầu\nNghĩ quá nhiều\nKhiến anh bị đau, đau đau\nNghĩ quá nhiều\nKhiến anh bị đau đau đau\nNghĩ quá nhiều\nKhiến anh bị đau đau đau\nNghĩ quá nhiều\nKhiến anh bị đau đau đau\nNghĩ quá nhiều khiến anh bị",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/DauDau-Wxrdie-16696456.mp3?st=fO2U2CEa6fCF-AMJpYKoaQ&e=1732105991&a=1&p=0&r=3b57ddd59da2b2ff9a36c5984a5a1312"
+    },
+    {
+        "title": "29",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "Mason Nguyen"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho 29 do ca sĩ Wxrdie, Mason Nguyen trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/29-WxrdieMasonNguyen-16696457.mp3?st=8S1qZ13D4ySprRaRtusm7Q&e=1732105964&a=1&p=0&r=953b4c3a5b775763911495958686d8ae"
+    },
+    {
+        "title": "Siêu Nhân Ngao",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "24k.Right",
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Siêu Nhân Ngao do ca sĩ 24k.Right, Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/SieuNhanNgao-Wxrdie24kRight-16696458.mp3?st=TcGN6f5J-a8SQxx4rvZxGA&e=1732105842&a=1&p=0&r=5295342c464e4864c6feb1ec3c3ac899"
+    },
+    {
+        "title": "Gia Tài",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "BABY $MOKE"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Gia Tài do ca sĩ Wxrdie, BABY $MOKE trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/GiaTai-WxrdieBABYMOKE-16696459.mp3?st=sc_1ZmxtsxiybLQHr43XdQ&e=1732106025&a=1&p=0&r=b36424c44f3bb5fc1c4b5655d39d58de"
+    },
+    {
+        "title": "Lối Sống",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Lối Sống do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/LoiSong-Wxrdie-16696460.mp3?st=RrmZsO4ZEQfsTcbyQBWqTw&e=1732105791&a=1&p=0&r=5c2c86055f278ca8e0ed64949c060c04"
+    },
+    {
+        "title": "Nu Cep",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Nu Cep do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/NuCep-Wxrdie-16696461.mp3?st=y2_80rSQypSeZ0EABCFUEA&e=1732105769&a=1&p=0&r=95e4064709f46b1991d5109065a8ce80"
+    },
+    {
+        "title": "Tổng Kết",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "Lil Wuyn"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Tổng Kết do ca sĩ Wxrdie, Lil Wuyn trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/TongKet-WxrdieLilWuyn-16696462.mp3?st=xKEg6-Q9ColSJXSWg44GWw&e=1732105923&a=1&p=0&r=2ddd1a7b35405aefa804bdf90c8ec185"
+    },
+    {
+        "title": "Cả 2",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "QNT",
+            "Spideyboy"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Cả 2 do ca sĩ Wxrdie, QNT, Spideyboy trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/Ca2-WxrdieQNTSpideyboy-16696463.mp3?st=-qpkyT0pHT-_4Go7mDqCxg&e=1732105942&a=1&p=0&r=9f0570cb5511e40755caad3aabbae1ec"
+    },
+    {
+        "title": "Lâu Đài",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie",
+            "Flava Sati"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Lâu Đài do ca sĩ Wxrdie, Flava Sati trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/LauDai-WxrdieFlavaSati-16696464.mp3?st=JS6OQYVaOk8qCeJJ-BjBLg&e=1732105956&a=1&p=0&r=979da8de2cf7f3f213b54e42ce49390b"
+    },
+    {
+        "title": "Mời Em",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Mcee Blue",
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Mời Em do ca sĩ Mcee Blue, Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/MoiEm-WxrdieMceeBlue-16696465.mp3?st=X3UvOrFTBXiXBQozB6y4lQ&e=1732105936&a=1&p=0&r=587c7fed858bfaa76f8f00c149bc7ecc"
+    },
+    {
+        "title": "Thíc Qé",
+        "cover_img": "https://avatar-ex-swe.nixcdn.com/song/2024/11/12/b/e/7/0/1731385118149_500.jpg",
+        "artist": [
+            "Wxrdie"
+        ],
+        "lyric": "- Hiện chưa có lời bài hát nào cho Thíc Qé do ca sĩ Wxrdie trình bày. Bạn có thể click vào đây để đăng lời cho bài hát này.",
+        "url_media": "https://stream.nct.vn/Unv_Audio539/ThicQe-Wxrdie-16696466.mp3?st=frtwl4NzXjikmfwIA9VxUg&e=1732107847&a=1&p=0&r=6939df3d4eb5249cfc412f1c69e6a134"
     }
 ]
 
@@ -1879,5 +2111,116 @@ export const artists = [
     "Taylor Swift",
     "Post Malone",
     "Florence + the Machine",
-    "Billie Eilish"
+    "Billie Eilish",
+    "KayC",
+    "RPT JasonDilla",
+    "JustaTee",
+    "LVK",
+    "Thai VG",
+    "BABY $MOKE",
+    "QNT",
+    "Spideyboy",
+    "Flava Sati",
+    "Mcee Blue"
 ]
+
+export const artistsForIdMongo = {
+    "ROSÉ": "67358dfa91956558158221d1",
+    "Bruno Mars": "67358dfa91956558158221d3",
+    "JENNIE": "67358dfa91956558158221d5",
+    "MONO": "67358dfa91956558158221d7",
+    "RAP VIỆT": "67358dfa91956558158221d9",
+    "Dangrangto": "67358dfa91956558158221db",
+    "aespa": "67358dfa91956558158221dd",
+    "Captain": "67358dfa91956558158221df",
+    "RHYDER": "67358dfa91956558158221e1",
+    "TeuYungBoy": "67358dfa91956558158221e3",
+    "Donal": "67358dfa91956558158221e5",
+    "Da LAB": "67358dfa91956558158221e7",
+    "Minh Tốc & Lam": "67358dfa91956558158221e9",
+    "ANH TRAI \"SAY HI\"": "67358dfa91956558158221eb",
+    "Quang Hùng MasterD": "67358dfa91956558158221ed",
+    "Negav": "67358dfa91956558158221ef",
+    "HIEUTHUHAI": "67358dfa91956558158221f1",
+    "Dương Domic": "67358dfa91956558158221f3",
+    "tlinh": "67358dfa91956558158221f5",
+    "Low G": "67358dfa91956558158221f7",
+    "Lê Bảo Bình": "67358dfa91956558158221f9",
+    "Isaac": "67358dfa91956558158221fb",
+    "Gill": "67358dfa91956558158221fd",
+    "Khánh Phương": "67358dfa91956558158221ff",
+    "NICKY": "67358dfa9195655815822201",
+    "AMEE": "67358dfa9195655815822203",
+    "Vũ.": "67358dfa9195655815822205",
+    "Binz": "67358dfa9195655815822207",
+    "Linh Hương Luz": "67358dfa9195655815822209",
+    "Meme Media": "67358dfa919565581582220b",
+    "Diệu Vân": "67358dfa919565581582220d",
+    "H2K": "67358dfa919565581582220f",
+    "Ngô Lan Hương": "67358dfa9195655815822211",
+    "SK Pictures": "67358dfa9195655815822213",
+    "PiaLinh": "67358dfa9195655815822215",
+    "Ogenus": "67358dfa9195655815822217",
+    "Shayda": "67358dfa9195655815822219",
+    "7dnight": "67358dfa919565581582221b",
+    "ERIK": "67358dfa919565581582221d",
+    "Wxrdie": "67358dfa919565581582221f",
+    "HURRYKNG": "67358dfa9195655815822221",
+    "Quân A.P": "67358dfa9195655815822223",
+    "Pháp Kiều": "67358dfa9195655815822225",
+    "Quang Trung": "67358dfa9195655815822227",
+    "Song Luân": "67358dfa9195655815822229",
+    "Anh Tú Atus": "67358dfa919565581582222b",
+    "LISA": "67358dfa919565581582222d",
+    "Rosalía": "67358dfa919565581582222f",
+    "24k.Right": "67358dfa9195655815822231",
+    "Mason Nguyen": "67358dfa9195655815822233",
+    "Nam Cocain": "67358dfa9195655815822235",
+    "WEAN": "67358dfa9195655815822237",
+    "W/n": "67358dfa9195655815822239",
+    "Khiem": "67358dfa919565581582223b",
+    "Vương Vũ Trụ Leto": "67358dfa919565581582223d",
+    "Kiều Tuấn Thừa (Qiao Jun Cheng)": "67358dfa919565581582223f",
+    "Wren Evans": "67358dfa9195655815822241",
+    "NAYEON": "67358dfa9195655815822243",
+    "Dương Minh Tuấn": "67358dfa9195655815822245",
+    "Kha": "67358dfa9195655815822247",
+    "Shartnuss": "67358dfa9195655815822249",
+    "Tr.D": "67358dfa919565581582224b",
+    "Obito": "67358dfa919565581582224d",
+    "Lăng LD": "67358dfa919565581582224f",
+    "VSTRA": "67358dfa9195655815822251",
+    "RPT MCK": "67358dfa9195655815822253",
+    "Shiki": "67358dfa9195655815822255",
+    "Lil Wuyn": "67358dfa9195655815822257",
+    "Minstu": "67358dfa9195655815822259",
+    "Đen": "67358dfa919565581582225b",
+    "B-Wine": "67358dfa919565581582225d",
+    "CAM": "67358dfa919565581582225f",
+    "Young H": "67358dfa9195655815822261",
+    "Pjpo": "67358dfa9195655815822263",
+    "16 BrT": "67358dfa9195655815822265",
+    "Spyder": "67358dfa9195655815822267",
+    "Kwzzzy": "67358dfa9195655815822269",
+    "Rhymastic": "67358dfa919565581582226b",
+    "VSOUL": "67358dfa919565581582226d",
+    "Mỹ Anh": "67358dfa919565581582226f",
+    "Hà Anh Tuấn": "67358dfa9195655815822271",
+    "khang": "67358dfa9195655815822273",
+    "Dear Jane": "67358dfa9195655815822275",
+    "Ariana Grande": "67358dfa9195655815822277",
+    "Taylor Swift": "67358dfa9195655815822279",
+    "Post Malone": "67358dfa919565581582227b",
+    "Florence + the Machine": "67358dfa919565581582227d",
+    "Billie Eilish": "67358dfa919565581582227f",
+    "KayC": "67358dfa9195655815822281",
+    "RPT JasonDilla": "67358dfa9195655815822283",
+    "JustaTee": "67358dfa9195655815822285",
+    "LVK": "67358dfa9195655815822287",
+    "Thai VG": "67358dfa9195655815822289",
+    "BABY $MOKE": "67358dfa919565581582228b",
+    "QNT": "67358dfa919565581582228d",
+    "Spideyboy": "67358dfa919565581582228f",
+    "Flava Sati": "67358dfa9195655815822291",
+    "Mcee Blue": "67358dfa9195655815822293"
+}

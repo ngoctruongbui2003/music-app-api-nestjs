@@ -1,3 +1,4 @@
+import { PartialType } from "@nestjs/mapped-types";
 import { IsEmail, IsNotEmpty } from "class-validator";
 
 export class LoginDto {
@@ -21,7 +22,7 @@ export class RegisterDto {
     display_name: string;
 }
 
-export class LoginWithPlatformDto extends RegisterDto {
+export class LoginWithPlatformDto extends PartialType(RegisterDto) {
     
 }
 

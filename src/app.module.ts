@@ -8,12 +8,24 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './core/transform.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { ArtistsModule } from './modules/artists/artists.module';
+import { TracksModule } from './modules/tracks/tracks.module';
+import { AlbumsModule } from './modules/albums/albums.module';
+import { PlaylistsModule } from './modules/playlists/playlists.module';
+import { TrackArtistModule } from './modules/track.artist/track.artist.module';
+import { TrackPlaylistModule } from './modules/track.playlist/track.playlist.module';
+import { UserPlaylistModule } from './modules/user.playlist/user.playlist.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     ArtistsModule,
+    TracksModule,
+    AlbumsModule,
+    PlaylistsModule,
+    TrackArtistModule,
+    TrackPlaylistModule,
+    UserPlaylistModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -23,7 +35,7 @@ import { ArtistsModule } from './modules/artists/artists.module';
         uri: configService.get<string>('MONGODB_URI'),
       }),
       inject: [ConfigService],
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [

@@ -23,4 +23,12 @@ export const USER_EXISTED = 'Người dùng đã tồn tại';
 export const ARTIST_NOT_FOUND = 'Nghệ sĩ không tồn tại';
 export const ARTIST_EXISTED = 'Nghệ sĩ đã tồn tại';
 
+export const TRACK_NOT_FOUND = 'Track không tồn tại';
+export const TRACK_EXISTED = 'Track đã tồn tại';
+
+export const PLAYLIST_NOT_FOUND = 'Playlist không tồn tại';
+export const PLAYLIST_EXISTED = 'Playlist đã tồn tại';
+
+export const ALBUM_NOT_FOUND = 'Album không tồn tại';
+export const ALBUM_EXISTED = 'Album đã tồn tại';
 
