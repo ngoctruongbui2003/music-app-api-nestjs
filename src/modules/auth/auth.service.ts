@@ -6,10 +6,15 @@ import { LOGIN_FAIL, REGISTER_FAIL, USER_EXISTED } from 'src/constants/server';
 import { plainToInstance } from 'class-transformer';
 import { AccountType } from 'src/constants/enum';
 import { comparePassword } from 'src/utils';
+import { MailService } from '../mail/mail.service';
+import { RegisterMailDto } from '../mail/dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private readonly mailService: MailService
+  ) {}
 
   async register(registerDto: RegisterDto) {
 
@@ -30,6 +35,10 @@ export class AuthService {
     const newUser = await this.usersService.create(createUserDto);
 
     if (!newUser) throw new BadRequestException(REGISTER_FAIL);
+
+    // Send mail
+    const registerMailDto = plainToInstance(RegisterMailDto, createUserDto)
+    this.mailService.registerMail(registerMailDto);
 
     return newUser;
   }
@@ -65,6 +74,10 @@ export class AuthService {
     const newUser = await this.usersService.create(createUserDto);
 
     if (!newUser) throw new BadRequestException(REGISTER_FAIL);
+
+    // send mail
+    const registerMailDto = plainToInstance(RegisterMailDto, createUserDto)
+    this.mailService.registerMail(registerMailDto);
 
     return newUser;
   }
