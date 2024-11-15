@@ -11,7 +11,7 @@ export class UsersService {
   
   async create(createUserDto: CreateUserDto) {
     const { password, ...rest } = createUserDto;
-    const passwordHash = await hashPassword(password);
+    const passwordHash = password ? await hashPassword(password) : "";
 
     const newUser = await this.userModel.create({
       ...rest,

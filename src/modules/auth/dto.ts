@@ -1,5 +1,5 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional } from "class-validator";
 
 export class LoginDto {
     @IsEmail({}, { message: 'Invalid email' })
@@ -20,9 +20,16 @@ export class RegisterDto {
 
     @IsNotEmpty({ message: 'Name is required' })
     display_name: string;
+
+    @IsOptional()
+    country: string;
 }
 
 export class LoginWithPlatformDto extends PartialType(RegisterDto) {
-    
+    @IsOptional()
+    avatar_url: string;
+
+    @IsNotEmpty({ message: 'Account type is required' })
+    account_type: string;
 }
 

@@ -23,11 +23,19 @@ export class AuthController {
     };
   }
 
-  @Post('/login-platform')
-  async LoginWithPlatform(@Body() loginWithPlatformDto: LoginWithPlatformDto) {
+  @Post('/login-facebook')
+  async LoginWithFacebook(@Body() loginWithPlatformDto: LoginWithPlatformDto) {
     return {
       message: LOGIN_SUCCESS,
-      data: await this.authService.loginWithPlatform(loginWithPlatformDto),
+      data: await this.authService.loginWithFacebook(loginWithPlatformDto),
+    };
+  }
+
+  @Post('/login-google')
+  async LoginWithGoogle(@Body() loginWithPlatformDto: LoginWithPlatformDto) {
+    return {
+      message: LOGIN_SUCCESS,
+      data: await this.authService.loginWithGoogle(loginWithPlatformDto),
     };
   }
 }
