@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto';
 import { CREATE_SUCCESS, DELETE_SUCCESS, GET_ALL_SUCCESS, GET_SUCCESS, UPDATE_SUCCESS } from 'src/constants/server';
 
 @Controller('users')
@@ -36,6 +36,13 @@ export class UsersController {
     return {
       message: UPDATE_SUCCESS,
       data: await this.usersService.update(id, updateUserDto)
+    };
+  }
+
+  async updatePassword(@Param('id') id: string, @Body() updateUserPasswordDto: UpdateUserPasswordDto) {
+    return {
+      message: UPDATE_SUCCESS,
+      data: await this.usersService.updatePassword(id, updateUserPasswordDto)
     };
   }
 

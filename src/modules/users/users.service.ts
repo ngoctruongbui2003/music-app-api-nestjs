@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/schemas/user.schema';
 import { Model } from 'mongoose';
-import { hashPassword } from 'src/utils';
+import { comparePassword, hashPassword } from 'src/utils';
+import { INVALID_PASSWORD, USER_NOT_FOUND } from 'src/constants/server';
 
 @Injectable()
 export class UsersService {
@@ -41,6 +42,24 @@ export class UsersService {
     user.save();
 
     return user;
+  }
+
+  async updatePassword(id: string, updateUserPasswordDto: UpdateUserPasswordDto) {
+    // find user
+    const foundUser = await this.userModel.findById(id);
+    if (!foundUser) throw new BadRequestException(USER_NOT_FOUND);
+
+    // check old password
+    const isMatch = await comparePassword(updateUserPasswordDto.oldPassword, foundUser.password);
+    if (!isMatch) throw new BadRequestException(INVALID_PASSWORD);
+
+    // update password
+    const newPassword = await hashPassword(updateUserPasswordDto.newPassword);
+    foundUser.password = newPassword;
+    foundUser.save();
+
+    delete foundUser.password;
+    return foundUser;
   }
 
   async remove(id: string) {

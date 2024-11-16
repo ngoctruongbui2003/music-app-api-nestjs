@@ -1,4 +1,4 @@
-import { PartialType } from "@nestjs/mapped-types";
+import { OmitType, PartialType } from "@nestjs/mapped-types";
 import { IsEmail, IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateUserDto {
@@ -22,6 +22,14 @@ export class CreateUserDto {
     account_type: string;
 }
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {
+export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['password'] as const)) {
+    
+}
 
+export class UpdateUserPasswordDto {
+    @IsNotEmpty({ message: 'Password is required' })
+    oldPassword: string;
+
+    @IsNotEmpty({ message: 'New password is required' })
+    newPassword: string;
 }
