@@ -35,7 +35,7 @@ export class ArtistsController {
   async findOne(@Param('id') id: string) {
     return {
       message: GET_SUCCESS,
-      data: await this.artistsService.findOne(+id)
+      data: await this.artistsService.findOne(id)
     };
   }
 
@@ -43,7 +43,7 @@ export class ArtistsController {
   async update(@Param('id') id: string, @Body() updateArtistDto: UpdateArtistDto) {
     return {
       message: UPDATE_SUCCESS,
-      data: await this.artistsService.update(+id, updateArtistDto)
+      data: await this.artistsService.update(id, updateArtistDto)
     };
   }
 
@@ -51,7 +51,7 @@ export class ArtistsController {
   async remove(@Param('id') id: string) {
     return {
       message: DELETE_SUCCESS,
-      data: await this.artistsService.remove(+id)
+      data: await this.artistsService.remove(id)
     };
   }
 }

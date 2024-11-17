@@ -3,7 +3,7 @@ import { CreateArtistDto, ImageDto, UpdateArtistDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Artist } from 'src/schemas/artist.schema';
 import { Model } from 'mongoose';
-import { CREATE_FAIL } from 'src/constants/server';
+import { ARTIST_NOT_FOUND, CREATE_FAIL, UPDATE_FAIL } from 'src/constants/server';
 import { artists } from 'src/db/fake';
 
 @Injectable()
@@ -27,7 +27,8 @@ export class ArtistsService {
 
       const createArtistDto = new CreateArtistDto();
       createArtistDto.name = artist;
-      createArtistDto.avatarUrl = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fthanhnien.vn%2Fdanh-doi-hanh-trinh-truong-thanh-cua-rapper-obito-185231012110144312.htm&psig=AOvVaw2o2daCfEBqXV_-4Ow-_tiV&ust=1731639239085000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCOCq18rp2okDFQAAAAAdAAAAABAE';
+      createArtistDto.description = `This is a ${artist} artist`;
+      createArtistDto.avatar_url = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fthanhnien.vn%2Fdanh-doi-hanh-trinh-truong-thanh-cua-rapper-obito-185231012110144312.htm&psig=AOvVaw2o2daCfEBqXV_-4Ow-_tiV&ust=1731639239085000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCOCq18rp2okDFQAAAAAdAAAAABAE';
       createArtistDto.images = [images];
       createArtistDto.genres = ['pop'];
       createArtistDto.type = ['artist'];
@@ -41,21 +42,33 @@ export class ArtistsService {
     return newArtists;
   }
 
-  findAll() {
-    const artists = this.artistModel.find();
+  async findAll() {
+    const artists = await this.artistModel.find();
 
     return artists;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} artist`;
+  async findOne(id: string) {
+    const artist = await this.artistModel.findById(id);
+
+    if (!artist) throw new BadRequestException(ARTIST_NOT_FOUND);
+
+    return artist;
   }
 
-  update(id: number, updateArtistDto: UpdateArtistDto) {
-    return `This action updates a #${id} artist`;
+  async update(id: string, updateArtistDto: UpdateArtistDto) {
+    const updatedArtist = await this.artistModel.findByIdAndUpdate(id, updateArtistDto, { new: true });
+
+    if (!updatedArtist) throw new BadRequestException(UPDATE_FAIL);
+
+    console.log(updatedArtist);
+
+    return updatedArtist;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} artist`;
+  async remove(id: string) {
+    const deletedArtist = await this.artistModel.findByIdAndDelete(id);
+
+    return deletedArtist;
   }
 }
