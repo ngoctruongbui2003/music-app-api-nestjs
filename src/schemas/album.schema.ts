@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Artist } from './artist.schema';
 import { Track } from './track.schema';
+import { ModelName } from 'src/constants/enum';
 
 export type AlbumDocument = HydratedDocument<Album>;
 
@@ -13,10 +14,10 @@ export class Album {
     @Prop()
     image_url: string;
 
-    @Prop()
+    @Prop({ default: 0 })
     total_duration_ms: number;
 
-    @Prop()
+    @Prop({ default: 0 })
     total_tracks: number;
 
     @Prop({ default: 0 })
@@ -30,10 +31,10 @@ export class Album {
 
     // RELATIONSHIP
 
-    @Prop({ type: Types.ObjectId, ref: (() => Artist).name })
+    @Prop({ type: Types.ObjectId, ref: ModelName.ARTIST })
     artist: Artist;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => Track).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK }] })
     tracks: Track[];
 
 }

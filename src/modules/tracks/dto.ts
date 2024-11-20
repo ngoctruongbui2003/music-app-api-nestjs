@@ -5,14 +5,15 @@ export class CreateTrackDto {
     title: string;
     duration_ms: number;
     genre: string;
-    imageUrl: string;
+    image_url: string;
     url_media: string;
-    album_position: number;
+    album_order_position: number;
     isPlayable: boolean;
     isExplicit: boolean;
+    release_date: Date;
+    
     artists: Types.ObjectId[];
     createdBy: string;
-    release_date: Date;
 }
 
 export class UpdateTrackDto extends PartialType(CreateTrackDto) {}

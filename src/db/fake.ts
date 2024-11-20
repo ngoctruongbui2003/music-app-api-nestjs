@@ -2124,6 +2124,26 @@ export const artists = [
     "Mcee Blue"
 ]
 
+export const albums = {
+    "Obito": "Đánh đổi",
+    "Lil Wuyn": "An",
+    "Vũ.": "Những tiếc nuối",
+    "Ariana Grande": "thank u, next",
+    "Taylor Swift": "1989 - THE TORTURED POETS DEPARTMENT",
+    "Billie Eilish": "HIT ME HARD AND SOFT - WHEN WE ALL FALL ASLEEP, WHERE DO WE GO? - Happier Than Ever (Explicit)",
+    "Wxrdie": "THE WXRIDES",
+}
+
+export const albumsForIdMongo = {
+    "Đánh đổi": "673e183e28e8f7f571fce561",
+    "An": "673e183e28e8f7f571fce566",
+    "Những tiếc nuối": "673e183e28e8f7f571fce56b",
+    "thank u, next": "673e183e28e8f7f571fce570",
+    "1989 - THE TORTURED POETS DEPARTMENT": "673e183e28e8f7f571fce575",
+    "HIT ME HARD AND SOFT - WHEN WE ALL FALL ASLEEP, WHERE DO WE GO? - Happier Than Ever (Explicit)": "673e183e28e8f7f571fce57a",
+    "THE WXRIDES": "673e183e28e8f7f571fce57f"
+}
+
 export const artistsForIdMongo = {
     "ROSÉ": "67386fdca5ffc2707bc05144",
     "Bruno Mars": "67386fdca5ffc2707bc05146",

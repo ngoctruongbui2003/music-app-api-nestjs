@@ -1,7 +1,7 @@
 import { HydratedDocument, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ImageDto } from 'src/modules/artists/dto';
-import { ArtistType, Genre } from 'src/constants/enum';
+import { ArtistType, Genre, ModelName } from 'src/constants/enum';
 import { Track } from './track.schema';
 import { Album } from './album.schema';
 import { TrackArtist } from './track.artist.schema';
@@ -36,13 +36,13 @@ export class Artist {
 
     // RELATIONSHIP
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => Track).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK }] })
     tracks: Track[];
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => Album).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.ALBUM }] })
     albums: Album[];
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => TrackArtist).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_ARTIST }] })
     trackArtists: TrackArtist[];
 }
 

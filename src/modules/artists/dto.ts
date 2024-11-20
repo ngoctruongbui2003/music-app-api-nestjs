@@ -31,3 +31,16 @@ export class CreateArtistDto {
 export class UpdateArtistDto extends PartialType(CreateArtistDto) {
     
 }
+
+export class FindArtistDto {
+    chosenSelect: string;
+    isPopulateAlbum: boolean;
+
+    constructor(
+        chosenSelect: string = '',
+        isPopulateAlbum: boolean = false
+    ) {
+        this.chosenSelect = chosenSelect;
+        this.isPopulateAlbum = isPopulateAlbum;
+    }
+}

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto';
+import { CreateUserDto, FindUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto';
 import { CREATE_SUCCESS, DELETE_SUCCESS, GET_ALL_SUCCESS, GET_SUCCESS, UPDATE_SUCCESS } from 'src/constants/server';
 
 @Controller('users')
@@ -16,18 +16,21 @@ export class UsersController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Body() findUserDto: FindUserDto = new FindUserDto()) {
     return {
       message: GET_ALL_SUCCESS,
-      data: await this.usersService.findAll(),
+      data: await this.usersService.findAll(findUserDto),
     };
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(
+    @Param('id') id: string,
+    @Body() findUserDto: FindUserDto = new FindUserDto()
+  ) {
     return {
       message: GET_SUCCESS,
-      data: await this.usersService.findOne(id),
+      data: await this.usersService.findOne(id, findUserDto),
     };
   }
 
@@ -39,7 +42,10 @@ export class UsersController {
     };
   }
 
-  async updatePassword(@Param('id') id: string, @Body() updateUserPasswordDto: UpdateUserPasswordDto) {
+  async updatePassword(
+    @Param('id') id: string,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto
+  ) {
     return {
       message: UPDATE_SUCCESS,
       data: await this.usersService.updatePassword(id, updateUserPasswordDto)

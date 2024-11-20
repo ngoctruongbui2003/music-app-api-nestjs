@@ -1,9 +1,8 @@
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Artist } from './artist.schema';
 import { Album } from './album.schema';
-import { Genre } from 'src/constants/enum';
+import { Genre, ModelName } from 'src/constants/enum';
 import { TrackPlaylist } from './track.playlist.schema';
 import { TrackArtist } from './track.artist.schema';
 
@@ -42,16 +41,16 @@ export class Track {
     release_date: Date;
 
     // RELATIONSHIP
-    @Prop({ type: Types.ObjectId, ref: (() => Album).name })
+    @Prop({ type: Types.ObjectId, ref: ModelName.ALBUM })
     album: Album;
 
-    @Prop({ type: Types.ObjectId, ref: (() => Artist).name })
+    @Prop({ type: Types.ObjectId, ref: ModelName.ARTIST })
     artist: Artist;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => TrackPlaylist).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_PLAYLIST }] })
     trackPlaylists: TrackPlaylist[];
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => TrackArtist).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_ARTIST }] })
     trackArtists: TrackArtist[];
 }
 

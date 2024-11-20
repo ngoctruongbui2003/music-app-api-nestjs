@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ArtistsService } from './artists.service';
-import { CreateArtistDto, UpdateArtistDto } from './dto';
+import { CreateArtistDto, FindArtistDto, UpdateArtistDto } from './dto';
 import { CREATE_SUCCESS, DELETE_SUCCESS, GET_ALL_SUCCESS, GET_SUCCESS, UPDATE_SUCCESS } from 'src/constants/server';
 
 @Controller('artists')
@@ -24,18 +24,21 @@ export class ArtistsController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Body() findArtistDto: FindArtistDto) {
     return {
       message: GET_ALL_SUCCESS,
-      data: await this.artistsService.findAll() 
+      data: await this.artistsService.findAll(findArtistDto) 
     };
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(
+    @Param('id') id: string,
+    @Body() findArtistDto: FindArtistDto
+  ) {
     return {
       message: GET_SUCCESS,
-      data: await this.artistsService.findOne(id)
+      data: await this.artistsService.findOne(id, findArtistDto)
     };
   }
 

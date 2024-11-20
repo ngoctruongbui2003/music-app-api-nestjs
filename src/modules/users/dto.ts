@@ -33,3 +33,16 @@ export class UpdateUserPasswordDto {
     @IsNotEmpty({ message: 'New password is required' })
     newPassword: string;
 }
+
+export class FindUserDto {
+    chosenSelect: string;
+    isPopulateUserPlaylist: boolean;
+
+    constructor(
+        chosenSelect: string = '',
+        isPopulateUserPlaylist: boolean = false
+    ) {
+        this.chosenSelect = chosenSelect;
+        this.isPopulateUserPlaylist = isPopulateUserPlaylist
+    }
+}

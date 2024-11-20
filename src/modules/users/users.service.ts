@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto';
+import { CreateUserDto, FindUserDto, UpdateUserDto, UpdateUserPasswordDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/schemas/user.schema';
 import { Model } from 'mongoose';
@@ -22,13 +22,19 @@ export class UsersService {
     return newUser;
   }
 
-  async findAll() {
-    const users = await this.userModel.find();
+  async findAll(findUserDto: FindUserDto) {
+    const users = await this.userModel
+                  .find()
+                  .populate(findUserDto.isPopulateUserPlaylist ? 'userPlaylists' : '')
+                  .select(findUserDto.chosenSelect);
     return users;
   }
 
-  async findOne(id: string) {
-    const user = await this.userModel.findById(id);
+  async findOne(id: string, findUserDto: FindUserDto) {
+    const user = await this.userModel
+                .findById(id)
+                .populate(findUserDto.isPopulateUserPlaylist ? 'userPlaylists' : '')
+                .select(findUserDto.chosenSelect);
     return user;
   }
 

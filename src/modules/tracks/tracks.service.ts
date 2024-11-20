@@ -5,7 +5,7 @@ import { Track } from 'src/schemas/track.schema';
 import { Model, Types } from 'mongoose';
 import { artistsForIdMongo, songs } from 'src/db/fake';
 import { CREATE_FAIL, TRACK_NOT_FOUND } from 'src/constants/server';
-import { covertObjectId } from 'src/utils';
+import { convertObjectId } from 'src/utils';
 
 @Injectable()
 export class TracksService {
@@ -22,12 +22,9 @@ export class TracksService {
     let listTrack = [];
 
     for (const track of songs) {
-      // handle artists
+      // get artists in song
       let artists = [];
       for (const artist of track.artist) {
-        console.log(artist);
-        console.log(artistsForIdMongo[artist]);
-        
         artists.push(artistsForIdMongo[artist]);
       }
 
@@ -37,9 +34,9 @@ export class TracksService {
       createTrackDto.title = track.title;
       createTrackDto.duration_ms = 0;
       createTrackDto.genre = "pop";
-      createTrackDto.imageUrl = track.cover_img;
+      createTrackDto.image_url = track.cover_img;
       createTrackDto.url_media = track.url_media;
-      createTrackDto.album_position = 0;
+      createTrackDto.album_order_position = 0;
       createTrackDto.isPlayable = true;
       createTrackDto.isExplicit = true;
       createTrackDto.artists = artists;
@@ -75,7 +72,7 @@ export class TracksService {
 
   async findOne(id: string) {
     const foundTrack = await this.trackModel
-                              .findOne({ _id: covertObjectId(id) })
+                              .findOne({ _id: convertObjectId(id) })
                               .populate('artists')
                               .populate('createdBy')
                               .lean();

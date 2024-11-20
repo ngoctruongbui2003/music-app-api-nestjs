@@ -1,10 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateArtistDto, ImageDto, UpdateArtistDto } from './dto';
+import { CreateArtistDto, FindArtistDto, ImageDto, UpdateArtistDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Artist } from 'src/schemas/artist.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ARTIST_NOT_FOUND, CREATE_FAIL, UPDATE_FAIL } from 'src/constants/server';
 import { artists } from 'src/db/fake';
+import { convertObjectId } from 'src/utils';
+import { Album } from 'src/schemas/album.schema';
 
 @Injectable()
 export class ArtistsService {
@@ -42,15 +44,23 @@ export class ArtistsService {
     return newArtists;
   }
 
-  async findAll() {
-    const artists = await this.artistModel.find();
+  async findAll(findArtistDto: FindArtistDto = new FindArtistDto()) {
+    const artists = await this.artistModel
+                    .find()
+                    .populate(findArtistDto.isPopulateAlbum ? 'albums' : '')
+                    .select(findArtistDto.chosenSelect);
 
     return artists;
   }
 
-  async findOne(id: string) {
-    const artist = await this.artistModel.findById(id);
-
+  async findOne(
+    id: string,
+    findArtistDto: FindArtistDto = { chosenSelect: '', isPopulateAlbum: false }
+  ) {
+    const artist = await this.artistModel
+                    .findById(id)
+                    .populate(findArtistDto.isPopulateAlbum ? 'albums' : '')
+                    .select(findArtistDto.chosenSelect);
     if (!artist) throw new BadRequestException(ARTIST_NOT_FOUND);
 
     return artist;
@@ -58,10 +68,7 @@ export class ArtistsService {
 
   async update(id: string, updateArtistDto: UpdateArtistDto) {
     const updatedArtist = await this.artistModel.findByIdAndUpdate(id, updateArtistDto, { new: true });
-
     if (!updatedArtist) throw new BadRequestException(UPDATE_FAIL);
-
-    console.log(updatedArtist);
 
     return updatedArtist;
   }
@@ -70,5 +77,16 @@ export class ArtistsService {
     const deletedArtist = await this.artistModel.findByIdAndDelete(id);
 
     return deletedArtist;
+  }
+
+  async addAlbum(artistId: string, album: Types.ObjectId) {
+    const artist = await this.artistModel.findByIdAndUpdate(
+      artistId,
+      { $push: { albums: album } },
+      { new: true }
+    );
+    if (!artist) throw new BadRequestException(ARTIST_NOT_FOUND);
+
+    return artist;
   }
 }

@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { TrackPlaylist } from './track.playlist.schema';
 import { UserPlaylist } from './user.playlist.schema';
+import { ModelName } from 'src/constants/enum';
 
 export type PlaylistDocument = HydratedDocument<Playlist>;
 
@@ -33,10 +34,10 @@ export class Playlist {
 
     // REALTIONSHIP
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => TrackPlaylist).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_PLAYLIST }] })
     trackPlaylists: TrackPlaylist[];
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: (() => UserPlaylist).name }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.USER_PLAYLIST }] })
     userPlaylists: UserPlaylist[];
 }
 

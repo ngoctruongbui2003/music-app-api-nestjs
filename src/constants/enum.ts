@@ -1,3 +1,14 @@
+export enum ModelName {
+    USER = 'User',
+    ALBUM = 'Album',
+    ARTIST = 'Artist',
+    TRACK = 'Track',
+    PLAYLIST = 'Playlist',
+    TRACK_ARTIST = 'TrackArtist',
+    TRACK_PLAYLIST = 'TrackPlaylist',
+    USER_PLAYLIST = 'UserPlaylist',
+}
+
 export enum AccountProduct {
     FREE = 'free',
     PREMIUM = 'premium',
@@ -15,8 +26,8 @@ export enum Genre {
     ROCK = 'rock',
     JAZZ = 'jazz',
     HIPHOP = 'hiphop',
-    CLASSICAL = 'classical',
-    ELECTRONIC = 'electronic'
+    RAP = 'rap',
+    CLASSICAL = 'classical'
 }
 
 export enum ArtistType {

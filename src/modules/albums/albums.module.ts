@@ -3,9 +3,17 @@ import { AlbumsService } from './albums.service';
 import { AlbumsController } from './albums.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Album, AlbumSchema } from 'src/schemas/album.schema';
+import { ArtistsModule } from '../artists/artists.module';
+import { Artist, ArtistSchema } from 'src/schemas/artist.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Album.name, schema: AlbumSchema }])],
+  imports: [
+    ArtistsModule,
+    MongooseModule.forFeature([
+      { name: Album.name, schema: AlbumSchema },
+      { name: Artist.name, schema: ArtistSchema },
+    ]),
+  ],
   controllers: [AlbumsController],
   providers: [AlbumsService],
 })

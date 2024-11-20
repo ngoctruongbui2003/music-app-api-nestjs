@@ -14,6 +14,7 @@ import { PlaylistsModule } from './modules/playlists/playlists.module';
 import { TrackArtistModule } from './modules/track.artist/track.artist.module';
 import { TrackPlaylistModule } from './modules/track.playlist/track.playlist.module';
 import { UserPlaylistModule } from './modules/user.playlist/user.playlist.module';
+import { Connection } from 'mongoose';
 
 @Module({
   imports: [
@@ -33,6 +34,13 @@ import { UserPlaylistModule } from './modules/user.playlist/user.playlist.module
       imports: [ConfigurableModuleBuilder],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
+        onConnectionCreate: (connection: Connection) => {
+          connection.on('connected', () => console.log('------Connected to MongoDB------'));
+          connection.on('open', () => console.log('------Opened to MongoDB------'));
+          connection.on('disconnected', () => console.log('------Disconnected from MongoDB------'));
+          connection.on('reconnected', () => console.log('------Reconnected to MongoDB------'));
+          connection.on('disconnecting', () => console.log('------Disconnecting from MongoDB------'));
+        }
       }),
       inject: [ConfigService],
     }),
