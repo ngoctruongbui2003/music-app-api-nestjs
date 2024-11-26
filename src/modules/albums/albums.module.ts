@@ -16,5 +16,6 @@ import { Artist, ArtistSchema } from 'src/schemas/artist.schema';
   ],
   controllers: [AlbumsController],
   providers: [AlbumsService],
+  exports: [AlbumsService],
 })
 export class AlbumsModule {}

@@ -8,5 +8,6 @@ import { TrackArtist, TrackArtistSchema } from 'src/schemas/track.artist.schema'
   imports: [MongooseModule.forFeature([{ name: TrackArtist.name, schema: TrackArtistSchema }])],
   controllers: [TrackArtistController],
   providers: [TrackArtistService],
+  exports: [TrackArtistService],
 })
 export class TrackArtistModule {}

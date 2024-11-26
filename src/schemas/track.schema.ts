@@ -15,6 +15,12 @@ export class Track {
 
     @Prop()
     duration_ms: number;
+
+    @Prop()
+    description: string;
+
+    @Prop()
+    lyric: string;
     
     @Prop({ type: [String], enum: Genre })
     genre: Array<Genre>;
@@ -46,9 +52,6 @@ export class Track {
 
     @Prop({ type: Types.ObjectId, ref: ModelName.ARTIST })
     artist: Artist;
-
-    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_PLAYLIST }] })
-    trackPlaylists: TrackPlaylist[];
 
     @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_ARTIST }] })
     trackArtists: TrackArtist[];

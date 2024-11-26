@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAlbumDto, FindAlbumDto, UpdateAlbumDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Album } from 'src/schemas/album.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ALBUM_NOT_FOUND, ARTIST_NOT_FOUND, CREATE_FAIL, UPDATE_FAIL } from 'src/constants/server';
 import { albums, artistsForIdMongo } from 'src/db/fake';
 import { convertObjectId, getInfoData } from 'src/utils';
@@ -94,5 +94,16 @@ export class AlbumsService {
     const removedAlbum = await this.albumModel.findByIdAndDelete(id);
 
     return removedAlbum;
+  }
+
+  async addTrack(albumId: string, trackId: Types.ObjectId) {
+    const track = await this.albumModel.findByIdAndUpdate(
+      albumId,
+      { $push: { tracks: trackId } },
+      { new: true }
+    );
+    if (!track) throw new BadRequestException(ALBUM_NOT_FOUND);
+
+    return track;
   }
 }

@@ -1,10 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { Types } from 'mongoose';
 
 export class CreateTrackDto {
     title: string;
     duration_ms: number;
-    genre: string;
+    description: string;
+    lyric: string;
+    genre: string[];
     image_url: string;
     url_media: string;
     album_order_position: number;
@@ -12,8 +13,9 @@ export class CreateTrackDto {
     isExplicit: boolean;
     release_date: Date;
     
-    artists: Types.ObjectId[];
-    createdBy: string;
+    album: string;
+    artist: string;
+    trackArtists: string[];
 }
 
 export class UpdateTrackDto extends PartialType(CreateTrackDto) {}

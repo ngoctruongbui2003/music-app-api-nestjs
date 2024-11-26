@@ -8,23 +8,28 @@ import { CreateTrackArtistDto, UpdateTrackArtistDto } from './dto';
 export class TrackArtistService {
   constructor(@InjectModel(TrackArtist.name) private trackArtistModel: Model<TrackArtist>) {}
 
-  create(createTrackArtistDto: CreateTrackArtistDto) {
-    return 'This action adds a new trackArtist';
+  async create(createTrackArtistDto: CreateTrackArtistDto) {
+    const newTrackArtist = await this.trackArtistModel.create(createTrackArtistDto);
+
+    return newTrackArtist;
   }
 
-  findAll() {
-    return `This action returns all trackArtist`;
+  async findAll() {
+    return await this.trackArtistModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} trackArtist`;
+  async findOne(id: number) {
+    return await this.trackArtistModel.findById(id);
   }
 
-  update(id: number, updateTrackArtistDto: UpdateTrackArtistDto) {
-    return `This action updates a #${id} trackArtist`;
+  async update(id: number, updateTrackArtistDto: UpdateTrackArtistDto) {
+    const updatedTrackArtist = await this.trackArtistModel.findByIdAndUpdate(id, updateTrackArtistDto);
+    return updatedTrackArtist;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} trackArtist`;
+  async remove(id: number) {
+    const deletedTrackArtist = await this.trackArtistModel.findByIdAndDelete(id);
+
+    return deletedTrackArtist;
   }
 }
