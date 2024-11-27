@@ -27,3 +27,19 @@ export const getSelectData = (select = []) => {
 export const unGetSelectData = (select = []) => {
     return Object.fromEntries( select.map( key => [key, 0] ) )
 }
+
+export const parseSortFields = (sort: string) => {
+    const fields = sort.split(',');
+
+    const sortCriteria: { [key: string]: 1 | -1 } = {};
+
+    fields.forEach(field => {
+        if (field.startsWith('-')) {
+            sortCriteria[field.slice(1)] = -1; 
+        } else {
+            sortCriteria[field] = 1;
+        }
+    });
+
+    return sortCriteria;
+}

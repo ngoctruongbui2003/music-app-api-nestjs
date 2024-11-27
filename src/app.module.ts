@@ -11,9 +11,6 @@ import { ArtistsModule } from './modules/artists/artists.module';
 import { TracksModule } from './modules/tracks/tracks.module';
 import { AlbumsModule } from './modules/albums/albums.module';
 import { PlaylistsModule } from './modules/playlists/playlists.module';
-import { TrackArtistModule } from './modules/track.artist/track.artist.module';
-import { TrackPlaylistModule } from './modules/track.playlist/track.playlist.module';
-import { UserPlaylistModule } from './modules/user.playlist/user.playlist.module';
 import { Connection } from 'mongoose';
 
 @Module({
@@ -24,9 +21,6 @@ import { Connection } from 'mongoose';
     TracksModule,
     AlbumsModule,
     PlaylistsModule,
-    TrackArtistModule,
-    TrackPlaylistModule,
-    UserPlaylistModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

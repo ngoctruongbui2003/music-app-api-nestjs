@@ -28,8 +28,5 @@ export class RegisterDto {
 export class LoginWithPlatformDto extends PartialType(RegisterDto) {
     @IsOptional()
     avatar_url: string;
-
-    @IsNotEmpty({ message: 'Account type is required' })
-    account_type: string;
 }
 

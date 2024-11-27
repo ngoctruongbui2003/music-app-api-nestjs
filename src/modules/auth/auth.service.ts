@@ -46,7 +46,7 @@ export class AuthService {
   async login(loginDto: LoginDto) {
 
     const foundUser = await this.usersService.findByEmail(loginDto.email);
-    if (!foundUser) throw new BadRequestException(USER_EXISTED);
+    if (!foundUser) throw new BadRequestException(LOGIN_FAIL);
 
     const isMatch = await comparePassword(loginDto.password, foundUser.password);
     if (!isMatch) throw new BadRequestException(LOGIN_FAIL);
@@ -58,7 +58,10 @@ export class AuthService {
 
   async loginWithPlatform(LoginWithPlatformDto: LoginWithPlatformDto, account_type: string) {
 
-    const foundUser = await this.usersService.findByEmail(LoginWithPlatformDto.email);
+    const foundUser = await this.usersService.findByProps({
+      email: LoginWithPlatformDto.email,
+      account_type
+    });
     if (foundUser) return foundUser;
 
     const createUserDto = plainToInstance(CreateUserDto, {

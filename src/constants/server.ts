@@ -20,6 +20,8 @@ export const LOGOUT_FAIL = 'Đăng xuất thất bại';
 export const USER_NOT_FOUND = 'Người dùng không tồn tại';
 export const USER_EXISTED = 'Người dùng đã tồn tại';
 export const INVALID_PASSWORD = 'Mật khẩu không đúng';
+export const SAME_OLD_PASSWORD = 'Mật khẩu mới không được trùng với mật khẩu cũ';
+export const ACCOUNT_TYPE_NOT_LOCAL = 'Tài khoản không phải là tài khoản local';
 
 export const ARTIST_NOT_FOUND = 'Nghệ sĩ không tồn tại';
 export const ARTIST_EXISTED = 'Nghệ sĩ đã tồn tại';

@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { TrackPlaylist } from './track.playlist.schema';
-import { UserPlaylist } from './user.playlist.schema';
 import { ModelName } from 'src/constants/enum';
+import { User } from './user.schema';
+import { Track } from './track.schema';
 
 export type PlaylistDocument = HydratedDocument<Playlist>;
 
@@ -34,11 +34,18 @@ export class Playlist {
 
     // REALTIONSHIP
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_PLAYLIST }] })
-    trackPlaylists: TrackPlaylist[];
+    @Prop({ type: Types.ObjectId, ref: ModelName.USER })
+    owner: User;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.USER_PLAYLIST }] })
-    userPlaylists: UserPlaylist[];
+    @Prop({
+    type: [
+        {
+            trackId: { type: Types.ObjectId, ref: ModelName.TRACK },
+            position: { type: Number, required: true },
+        },
+    ],
+    })
+    tracks: { trackId: Types.ObjectId; position: number }[];
 }
 
 export const PlaylistSchema = SchemaFactory.createForClass(Playlist);

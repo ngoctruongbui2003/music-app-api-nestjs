@@ -1,6 +1,6 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { Type } from "class-transformer";
-import { IsArray, IsNotEmpty, ValidateNested } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 
 export class ImageDto {
     url: string;
@@ -32,15 +32,22 @@ export class UpdateArtistDto extends PartialType(CreateArtistDto) {
     
 }
 
-export class FindArtistDto {
-    chosenSelect: string;
-    isPopulateAlbum: boolean;
+export class PaginationDto {
+    @IsOptional()
+    @IsNumber()
+    @Min(1)
+    page?: number = 1;
 
-    constructor(
-        chosenSelect: string = '',
-        isPopulateAlbum: boolean = false
-    ) {
-        this.chosenSelect = chosenSelect;
-        this.isPopulateAlbum = isPopulateAlbum;
-    }
+    @IsOptional()
+    @IsNumber()
+    @Min(1)
+    limit?: number = 10;
+
+    @IsOptional()
+    @IsString()
+    sort?: string;
+
+    @IsOptional()
+    @IsString()
+    select?: string;
 }

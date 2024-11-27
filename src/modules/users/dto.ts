@@ -36,13 +36,13 @@ export class UpdateUserPasswordDto {
 
 export class FindUserDto {
     chosenSelect: string;
-    isPopulateUserPlaylist: boolean;
+    isPopulatePlaylist: boolean;
 
     constructor(
         chosenSelect: string = '',
-        isPopulateUserPlaylist: boolean = false
+        isPopulatePlaylist: boolean = false
     ) {
         this.chosenSelect = chosenSelect;
-        this.isPopulateUserPlaylist = isPopulateUserPlaylist
+        this.isPopulatePlaylist = isPopulatePlaylist
     }
 }

@@ -1,7 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { AccountProduct, AccountType } from 'src/constants/enum';
-import { UserPlaylist } from './user.playlist.schema';
+import { AccountProduct, AccountType, ModelName } from 'src/constants/enum';
+import { Playlist } from './playlist.schema';
+import { Track } from './track.schema';
+import { Album } from './album.schema';
+import { Artist } from './artist.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -32,8 +35,61 @@ export class User {
     account_type: string;
 
     // RELATIONSHIP
-    @Prop({ type: [{ type: Types.ObjectId, ref: UserPlaylist.name }] })
-    userPlaylists: UserPlaylist[];
+    @Prop({
+        type: [
+            {
+                track: { type: Types.ObjectId, ref: ModelName.TRACK },
+                addedAt: { type: Date, default: Date.now },
+            },
+        ],
+        default: [],
+    })
+    history: { track: Track; addedAt: Date }[];
+
+    @Prop({
+        type: [
+            {
+                track: { type: Types.ObjectId, ref: ModelName.PLAYLIST },
+                addedAt: { type: Date, default: Date.now },
+            },
+        ],
+        default: []
+    })
+    playlists: Playlist[];
+
+    @Prop({
+        type: [
+            {
+                track: { type: Types.ObjectId, ref: ModelName.TRACK },
+                addedAt: { type: Date, default: Date.now },
+            },
+        ],
+        default: []
+    })
+    favorite_tracks: Track[];
+
+    @Prop({
+        type: [
+            {
+                track: { type: Types.ObjectId, ref: ModelName.ALBUM },
+                addedAt: { type: Date, default: Date.now },
+            },
+        ],
+        default: []
+    })
+    favorite_albums: Album[];
+
+    @Prop({
+        type: [
+            {
+                track: { type: Types.ObjectId, ref: ModelName.ARTIST },
+                addedAt: { type: Date, default: Date.now },
+            },
+        ],
+        default: []
+    })
+    favorite_artists: Artist[];
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

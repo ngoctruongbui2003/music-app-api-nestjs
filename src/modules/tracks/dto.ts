@@ -14,8 +14,8 @@ export class CreateTrackDto {
     release_date: Date;
     
     album: string;
-    artist: string;
-    trackArtists: string[];
+    creator: string;
+    collaborators: string[];
 }
 
 export class UpdateTrackDto extends PartialType(CreateTrackDto) {}

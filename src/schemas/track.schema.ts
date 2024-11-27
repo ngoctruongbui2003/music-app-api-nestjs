@@ -3,8 +3,6 @@ import { HydratedDocument, Types } from 'mongoose';
 import { Artist } from './artist.schema';
 import { Album } from './album.schema';
 import { Genre, ModelName } from 'src/constants/enum';
-import { TrackPlaylist } from './track.playlist.schema';
-import { TrackArtist } from './track.artist.schema';
 
 export type TrackDocument = HydratedDocument<Track>;
 
@@ -14,10 +12,10 @@ export class Track {
     title: string;
 
     @Prop()
-    duration_ms: number;
+    description: string;
 
     @Prop()
-    description: string;
+    duration_ms: number;
 
     @Prop()
     lyric: string;
@@ -51,10 +49,10 @@ export class Track {
     album: Album;
 
     @Prop({ type: Types.ObjectId, ref: ModelName.ARTIST })
-    artist: Artist;
+    creator: Artist;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK_ARTIST }] })
-    trackArtists: TrackArtist[];
+    @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.ARTIST }] })
+    collaborators: Artist[];
 }
 
 export const TrackSchema = SchemaFactory.createForClass(Track);

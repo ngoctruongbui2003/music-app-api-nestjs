@@ -7,8 +7,6 @@ import { albums, albumsForIdMongo, artistsForIdMongo, songs } from 'src/db/fake'
 import { CREATE_FAIL, TRACK_NOT_FOUND } from 'src/constants/server';
 import { convertObjectId } from 'src/utils';
 import { Genre } from 'src/constants/enum';
-import { TrackArtistService } from '../track.artist/track.artist.service';
-import { CreateTrackArtistDto } from '../track.artist/dto';
 import { AlbumsService } from '../albums/albums.service';
 
 @Injectable()
@@ -16,7 +14,6 @@ export class TracksService {
   constructor(
     @InjectModel(Track.name) private trackModel: Model<Track>,
     private readonly albumService: AlbumsService,
-    private readonly trackArtistService: TrackArtistService,
   ) {}
 
   async create(createTrackDto: CreateTrackDto) {
@@ -46,37 +43,41 @@ export class TracksService {
       createTrackDto.isPlayable = true;
       createTrackDto.isExplicit = true;
       createTrackDto.release_date = new Date();
-      createTrackDto.artist = artistsForIdMongo[artists[0]];
-
+      createTrackDto.creator = artistsForIdMongo[artists[0]];
+      createTrackDto.collaborators = artists.map(artist => artistsForIdMongo[artist]);
+      
       const newTrack = await this.create(createTrackDto);
       if (!newTrack) throw new BadRequestException(CREATE_FAIL);
 
-      newTrack.save();
+      
 
       // if album exist
       if (albums[artists[0]]) {
         let albumId = albumsForIdMongo[albums[artists[0]]];
         newTrack.album = albumId;
-
-        await this.albumService.addTrack(albumId, newTrack._id);
+        
+        const album = await this.albumService.addTrack(albumId, newTrack._id);
+        newTrack.album_order_position = album.tracks.length - 1;
       }
+
+      newTrack.save();
 
       // create track artist
-      for (const artist of artists) {
-        const createTrackArtistDto = new CreateTrackArtistDto();
-        createTrackArtistDto.track = newTrack._id.toString();
-        createTrackArtistDto.artist = artistsForIdMongo[artist];
+      // for (const artist of artists) {
+      //   const createTrackArtistDto = new CreateTrackArtistDto();
+      //   createTrackArtistDto.track = newTrack._id.toString();
+      //   createTrackArtistDto.artist = artistsForIdMongo[artist];
 
-        const newTrackArtist = await this.trackArtistService.create(createTrackArtistDto);
+      //   const newTrackArtist = await this.trackArtistService.create(createTrackArtistDto);
 
-        newTrackArtist.save();
+      //   newTrackArtist.save();
 
-        // add track artist to track
-        await this.addTrackArtist(
-          newTrack._id.toString(),
-          newTrackArtist._id
-        );
-      }
+      //   // add track artist to track
+      //   await this.addTrackArtist(
+      //     newTrack._id.toString(),
+      //     newTrackArtist._id
+      //   );
+      // }
 
       listTrack.push(newTrack);
     }
@@ -92,7 +93,8 @@ export class TracksService {
     const foundTrack = await this.trackModel
                               .findById(id)
                               .populate('album')
-                              .populate('artist')
+                              .populate('creator')
+                              .populate('collaborators')
                               .lean();
     
     if (!foundTrack) throw new BadRequestException(TRACK_NOT_FOUND);

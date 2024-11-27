@@ -6,9 +6,8 @@ import { Album } from 'src/schemas/album.schema';
 import { Model, Types } from 'mongoose';
 import { ALBUM_NOT_FOUND, ARTIST_NOT_FOUND, CREATE_FAIL, UPDATE_FAIL } from 'src/constants/server';
 import { albums, artistsForIdMongo } from 'src/db/fake';
-import { convertObjectId, getInfoData } from 'src/utils';
+import { convertObjectId } from 'src/utils';
 import { ArtistsService } from '../artists/artists.service';
-import { find } from 'rxjs';
 
 @Injectable()
 export class AlbumsService {
@@ -19,11 +18,11 @@ export class AlbumsService {
 
   async create(createAlbumDto: CreateAlbumDto) {
     // check artist is exist
-    const isArtistExist = await this.artistsService.findOne(createAlbumDto.artist);
+    const isArtistExist = await this.artistsService.findOne(createAlbumDto.creator);
     if (!isArtistExist) throw new BadRequestException(ARTIST_NOT_FOUND);
 
     // convert artist to ObjectId
-    const artistId = convertObjectId(createAlbumDto.artist);
+    const artistId = convertObjectId(createAlbumDto.creator);
 
     // Create new album
     const newAlbum = await this.albumModel.create({
@@ -35,7 +34,7 @@ export class AlbumsService {
     newAlbum.save();
 
     // Add ablum to artist
-    await this.artistsService.addAlbum(createAlbumDto.artist, newAlbum._id);
+    await this.artistsService.addAlbum(createAlbumDto.creator, newAlbum._id);
 
     return newAlbum;
   }
@@ -49,7 +48,7 @@ export class AlbumsService {
       createAlbumDto.image_url = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fopen.spotify.com%2Falbum%2F1wmnEWgcDdCcOujQpLwYxc&psig=AOvVaw2xeX9UF2VAjOv3Du7hm-Ow&ust=1731902027411000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCJjG4vq74okDFQAAAAAdAAAAABAE";
       createAlbumDto.isPlayable = true;
       createAlbumDto.release_date = new Date();
-      createAlbumDto.artist = artistsForIdMongo[album];
+      createAlbumDto.creator = artistsForIdMongo[album];
 
       const newAlbum = await this.create(createAlbumDto);
       if (!newAlbum) throw new BadRequestException(CREATE_FAIL);
@@ -97,13 +96,13 @@ export class AlbumsService {
   }
 
   async addTrack(albumId: string, trackId: Types.ObjectId) {
-    const track = await this.albumModel.findByIdAndUpdate(
+    const album = await this.albumModel.findByIdAndUpdate(
       albumId,
       { $push: { tracks: trackId } },
       { new: true }
     );
-    if (!track) throw new BadRequestException(ALBUM_NOT_FOUND);
+    if (!album) throw new BadRequestException(ALBUM_NOT_FOUND);
 
-    return track;
+    return album;
   }
 }

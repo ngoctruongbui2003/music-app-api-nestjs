@@ -32,7 +32,7 @@ export class Album {
     // RELATIONSHIP
 
     @Prop({ type: Types.ObjectId, ref: ModelName.ARTIST })
-    artist: Artist;
+    creator: Artist;
 
     @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.TRACK }] })
     tracks: Track[];

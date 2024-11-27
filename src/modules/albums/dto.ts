@@ -10,7 +10,7 @@ export class CreateAlbumDto {
     release_date: Date;
     
     @IsMongoId()
-    artist: string;
+    creator: string;
 }
 
 export class FindAlbumDto {

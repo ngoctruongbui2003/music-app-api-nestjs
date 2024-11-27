@@ -42,6 +42,7 @@ export class UsersController {
     };
   }
 
+  @Patch('/change-password/:id')
   async updatePassword(
     @Param('id') id: string,
     @Body() updateUserPasswordDto: UpdateUserPasswordDto
