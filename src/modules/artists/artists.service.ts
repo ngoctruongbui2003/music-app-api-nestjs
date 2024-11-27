@@ -73,9 +73,12 @@ export class ArtistsService {
 
   async findOne(
     id: string,
+    select: string = ''
   ) {
     const artist = await this.artistModel
-                    .findById(id);
+                    .find({ _id: id })
+                    .select(select)
+                    .lean();
     if (!artist) throw new BadRequestException(ARTIST_NOT_FOUND);
 
     return artist;
@@ -92,20 +95,5 @@ export class ArtistsService {
     const deletedArtist = await this.artistModel.findByIdAndDelete(id);
 
     return deletedArtist;
-  }
-
-  async addAlbum(artistId: string, album: Types.ObjectId) {
-    const artist = await this.artistModel.findByIdAndUpdate(
-      artistId,
-      { $push: { albums: album } },
-      { new: true }
-    );
-    if (!artist) throw new BadRequestException(ARTIST_NOT_FOUND);
-
-    return artist;
-  }
-
-  async addTrackArtist(artistId: string, trackArtistId: Types.ObjectId) {
-    
   }
 }

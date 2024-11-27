@@ -22,19 +22,16 @@ export class AlbumsService {
     if (!isArtistExist) throw new BadRequestException(ARTIST_NOT_FOUND);
 
     // convert artist to ObjectId
-    const artistId = convertObjectId(createAlbumDto.creator);
+    const creatorId = convertObjectId(createAlbumDto.creator);
 
     // Create new album
     const newAlbum = await this.albumModel.create({
       ...createAlbumDto,
-      artist: artistId,
+      creator: creatorId,
     });
     if (!newAlbum) throw new BadRequestException(CREATE_FAIL);
 
     newAlbum.save();
-
-    // Add ablum to artist
-    await this.artistsService.addAlbum(createAlbumDto.creator, newAlbum._id);
 
     return newAlbum;
   }

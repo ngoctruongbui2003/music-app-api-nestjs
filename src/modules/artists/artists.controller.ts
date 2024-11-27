@@ -34,11 +34,12 @@ export class ArtistsController {
 
   @Get(':id')
   async findOne(
-    @Param('id') id: string
+    @Param('id') id: string,
+    @Body('select') select: string
   ) {
     return {
       message: GET_SUCCESS,
-      data: await this.artistsService.findOne(id)
+      data: await this.artistsService.findOne(id, select)
     };
   }
 
