@@ -1,13 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TracksService } from './tracks.service';
-import { CreateTrackDto, UpdateTrackDto } from './dto';
+import { CreateTrackDto, FindTrackDto, PaginationTrackDto, UpdateTrackDto } from './dto';
 import { CREATE_SUCCESS, GET_SUCCESS } from 'src/constants/server';
 
 @Controller('tracks')
 export class TracksController {
   constructor(private readonly tracksService: TracksService) {}
 
-  @Post()
+  @Post('create')
   async create(@Body() createTrackDto: CreateTrackDto) {
     return {
       message: CREATE_SUCCESS,
@@ -15,24 +15,55 @@ export class TracksController {
     }
   }
 
-  @Post("/available")
-  async createAvailable() {
+  @Post()
+  async findAll(@Body() paginationTrackDto: PaginationTrackDto) {
     return {
-      message: CREATE_SUCCESS,
-      data: await this.tracksService.createAvailable(),
+      message: GET_SUCCESS,
+      data: await this.tracksService.findAll(paginationTrackDto),
+    };
+  }
+
+  @Post(':id')
+  async findOne(
+    @Param('id') id: string,
+    @Body() findTrackDto: FindTrackDto
+  ) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.tracksService.findOne(id, findTrackDto),
     }
   }
 
-  @Get()
-  async findAll() {
-    return this.tracksService.findAll();
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
+  @Post('album/:albumId')
+  async getTracksByAlbum(
+    @Param('albumId') albumId: string,
+    @Body() paginationTrackDto: PaginationTrackDto,
+  ) {
     return {
       message: GET_SUCCESS,
-      data: await this.tracksService.findOne(id),
+      data: await this.tracksService.getTracksByAlbum(albumId, paginationTrackDto),
+    }
+  }
+
+  @Post('artist/:artistId')
+  async getTracksByArtist(
+    @Param('artistId') artistId: string,
+    @Body() paginationTrackDto: PaginationTrackDto,
+  ) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.tracksService.getTracksByArtist(artistId, paginationTrackDto),
+    }
+  }
+
+  @Post('top/artist/:artistId')
+  async getTopTracksByArtist(
+    @Param('artistId') artistId: string,
+    @Body() paginationTrackDto: PaginationTrackDto
+  ) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.tracksService.getTopTracksByArtist(artistId, paginationTrackDto),
     }
   }
 
@@ -42,7 +73,10 @@ export class TracksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tracksService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.tracksService.remove(id),
+    }
   }
 }

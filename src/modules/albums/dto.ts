@@ -1,5 +1,5 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { IsDateString, IsMongoId } from "class-validator";
+import { IsBoolean, IsDateString, IsMongoId, IsNumber, IsOptional, IsString, Min } from "class-validator";
 
 export class CreateAlbumDto {
     title: string;
@@ -8,25 +8,38 @@ export class CreateAlbumDto {
 
     @IsDateString()
     release_date: Date;
+
+    @IsOptional()
+    type: string;
     
     @IsMongoId()
     creator: string;
 }
 
-export class FindAlbumDto {
-    chosenSelect: string;
-    isPopulateArtist: boolean;
-    isPopulateTrack: boolean;
+export class UpdateAlbumDto extends PartialType(CreateAlbumDto) {}
 
-    constructor(
-        chosenSelect: string = '',
-        isPopulateArtist: boolean = false,
-        isPopulateTrack: boolean = false
-    ) {
-        this.chosenSelect = chosenSelect;
-        this.isPopulateArtist = isPopulateArtist;
-        this.isPopulateTrack = isPopulateTrack;
-    }
+export class FindAlbumDto {
+    @IsOptional()
+    @IsString()
+    select?: string;
+
+    @IsOptional()
+    @IsBoolean()
+    isPopulateCreator?: boolean;
 }
 
-export class UpdateAlbumDto extends PartialType(CreateAlbumDto) {}
+export class PaginationAlbumDto extends PartialType(FindAlbumDto) {
+    @IsOptional()
+    @IsNumber()
+    @Min(1)
+    page?: number = 1;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(1)
+    limit?: number = 10;
+
+    @IsOptional()
+    @IsString()
+    sort?: string;
+}

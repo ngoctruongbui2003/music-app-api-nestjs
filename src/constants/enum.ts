@@ -35,3 +35,8 @@ export enum ArtistType {
     PRODUCER = 'producer',
     COMPOSER = 'composer',
 }
+
+export enum AlbumType {
+    SINGLE = 'single',
+    ALBUM = 'album'
+}

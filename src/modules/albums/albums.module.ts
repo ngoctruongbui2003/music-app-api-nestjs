@@ -1,17 +1,17 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AlbumsService } from './albums.service';
 import { AlbumsController } from './albums.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Album, AlbumSchema } from 'src/schemas/album.schema';
 import { ArtistsModule } from '../artists/artists.module';
-import { Artist, ArtistSchema } from 'src/schemas/artist.schema';
+import { TracksModule } from '../tracks/tracks.module';
 
 @Module({
   imports: [
     ArtistsModule,
+    forwardRef(() => TracksModule),
     MongooseModule.forFeature([
       { name: Album.name, schema: AlbumSchema },
-      { name: Artist.name, schema: ArtistSchema },
     ]),
   ],
   controllers: [AlbumsController],

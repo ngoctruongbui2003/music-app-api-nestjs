@@ -52,7 +52,7 @@ export class Track {
     creator: Artist;
 
     @Prop({ type: [{ type: Types.ObjectId, ref: ModelName.ARTIST }] })
-    collaborators: Artist[];
+    collaborators: Types.ObjectId[];
 }
 
 export const TrackSchema = SchemaFactory.createForClass(Track);

@@ -28,6 +28,10 @@ export const unGetSelectData = (select = []) => {
     return Object.fromEntries( select.map( key => [key, 0] ) )
 }
 
+export const parseSelectFields = (select: string) => {
+    return select.split(',').join(' ');
+}
+
 export const parseSortFields = (sort: string) => {
     const fields = sort.split(',');
 

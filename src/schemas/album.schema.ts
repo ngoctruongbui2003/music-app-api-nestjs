@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Artist } from './artist.schema';
 import { Track } from './track.schema';
-import { ModelName } from 'src/constants/enum';
+import { AlbumType, ModelName } from 'src/constants/enum';
 
 export type AlbumDocument = HydratedDocument<Album>;
 
@@ -25,6 +25,9 @@ export class Album {
 
     @Prop()
     isPlayable: boolean;
+
+    @Prop({ enum: AlbumType, default: AlbumType.ALBUM })
+    type: string;
 
     @Prop()
     release_date: Date;

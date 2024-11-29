@@ -2135,13 +2135,13 @@ export const albums = {
 }
 
 export const albumsForIdMongo = {
-    "Đánh đổi": "6745b8db635cf5011bfbd9e8",
-    "An": "6745b8db635cf5011bfbd9ed",
-    "Những tiếc nuối": "6745b8db635cf5011bfbd9f2",
-    "thank u, next": "6745b8db635cf5011bfbd9f7",
-    "1989 - THE TORTURED POETS DEPARTMENT": "6745b8db635cf5011bfbd9fc",
-    "HIT ME HARD AND SOFT - WHEN WE ALL FALL ASLEEP, WHERE DO WE GO? - Happier Than Ever (Explicit)": "6745b8dc635cf5011bfbda01",
-    "THE WXRIDES": "6745b8dc635cf5011bfbda06"
+    "Đánh đổi": "6747e52700a1fcb7eb635faf",
+    "An": "6747e52700a1fcb7eb635fb3",
+    "Những tiếc nuối": "6747e52700a1fcb7eb635fb7",
+    "thank u, next": "6747e52700a1fcb7eb635fbb",
+    "1989 - THE TORTURED POETS DEPARTMENT": "6747e52700a1fcb7eb635fbf",
+    "HIT ME HARD AND SOFT - WHEN WE ALL FALL ASLEEP, WHERE DO WE GO? - Happier Than Ever (Explicit)": "6747e52800a1fcb7eb635fc3",
+    "THE WXRIDES": "6747e52800a1fcb7eb635fc7"
 }
 
 export const artistsForIdMongo = {

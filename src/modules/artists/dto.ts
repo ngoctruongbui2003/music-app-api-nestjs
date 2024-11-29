@@ -32,7 +32,13 @@ export class UpdateArtistDto extends PartialType(CreateArtistDto) {
     
 }
 
-export class PaginationDto {
+export class FindArtistDto {
+    @IsOptional()
+    @IsString()
+    select?: string;
+}
+
+export class PaginationArtistDto extends PartialType(FindArtistDto) {
     @IsOptional()
     @IsNumber()
     @Min(1)
@@ -46,8 +52,4 @@ export class PaginationDto {
     @IsOptional()
     @IsString()
     sort?: string;
-
-    @IsOptional()
-    @IsString()
-    select?: string;
 }

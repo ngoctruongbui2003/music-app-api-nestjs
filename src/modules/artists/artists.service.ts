@@ -1,12 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateArtistDto, ImageDto, PaginationDto, UpdateArtistDto } from './dto';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateArtistDto, FindArtistDto, PaginationArtistDto, UpdateArtistDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Artist } from 'src/schemas/artist.schema';
 import { Model, Types } from 'mongoose';
 import { ARTIST_NOT_FOUND, CREATE_FAIL, UPDATE_FAIL } from 'src/constants/server';
-import { artists } from 'src/db/fake';
 import { convertObjectId, parseSortFields } from 'src/utils';
-import { Album } from 'src/schemas/album.schema';
 
 @Injectable()
 export class ArtistsService {
@@ -19,37 +17,10 @@ export class ArtistsService {
     return newArtist;
   }
 
-  async createAvailable() {
-    let newArtists = {};
-
-    for (const artist of artists) {
-      const images = new ImageDto();
-      images.url = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DvPz8ftK_4bk&psig=AOvVaw25Wlb7ubkLbxo1gYfvzrK5&ust=1731639430259000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLi83drp2okDFQAAAAAdAAAAABAE';
-      images.isCover = true;
-
-      const createArtistDto = new CreateArtistDto();
-      createArtistDto.name = artist;
-      createArtistDto.description = `This is a ${artist} artist`;
-      createArtistDto.avatar_url = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fthanhnien.vn%2Fdanh-doi-hanh-trinh-truong-thanh-cua-rapper-obito-185231012110144312.htm&psig=AOvVaw2o2daCfEBqXV_-4Ow-_tiV&ust=1731639239085000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCOCq18rp2okDFQAAAAAdAAAAABAE';
-      createArtistDto.images = [images];
-      createArtistDto.genres = ['pop'];
-      createArtistDto.type = ['artist'];
-
-      const newArtist = await this.create(createArtistDto);
-      if (!newArtist) throw new BadRequestException(CREATE_FAIL);
-
-      newArtists[newArtist.name] = newArtist._id;
-    }
-
-    return newArtists;
-  }
-
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(paginationDto: PaginationArtistDto) {
     const { page, limit, select, sort } = paginationDto;
     const skip = (page - 1) * limit;
     let sortCriteria;
-
-    const selectFields = select ? select.split(',').join(' ') : '';
 
     if (sort) {
       sortCriteria = parseSortFields(sort);
@@ -57,15 +28,15 @@ export class ArtistsService {
 
     const artists = await this.artistModel
                           .find()
-                          .select(selectFields)
+                          .select(select)
                           .skip(skip)
                           .limit(limit)
                           .sort(sort && sortCriteria)
                           .lean();
     
     return {
-      page: +page,
-      limit: +limit,
+      page: page && +page,
+      limit: limit && +limit,
       total: await this.artistModel.countDocuments(),
       data: artists,
     };
@@ -73,15 +44,31 @@ export class ArtistsService {
 
   async findOne(
     id: string,
-    select: string = ''
+    findArtistDto: FindArtistDto
   ) {
+    const { select } = findArtistDto;
+
     const artist = await this.artistModel
-                    .find({ _id: id })
+                    .findOne({ _id: convertObjectId(id) })
                     .select(select)
                     .lean();
-    if (!artist) throw new BadRequestException(ARTIST_NOT_FOUND);
+    if (!artist) throw new NotFoundException(ARTIST_NOT_FOUND);
 
     return artist;
+  }
+
+  async findMany(ids: string[]) {
+    const idsArray = ids.map(id => convertObjectId(id));
+    const artists = await this.artistModel
+    .find({ _id: { $in: idsArray } });
+
+    return artists;
+  }
+
+  async isExist(id: string) {
+    const artist = await this.artistModel.findById(id);
+    if (!artist) return false;
+    return true;
   }
 
   async update(id: string, updateArtistDto: UpdateArtistDto) {

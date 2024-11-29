@@ -1,13 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpCode, HttpStatus } from '@nestjs/common';
 import { ArtistsService } from './artists.service';
-import { CreateArtistDto, PaginationDto, UpdateArtistDto } from './dto';
+import { CreateArtistDto, FindArtistDto, PaginationArtistDto, UpdateArtistDto } from './dto';
 import { CREATE_SUCCESS, DELETE_SUCCESS, GET_ALL_SUCCESS, GET_SUCCESS, UPDATE_SUCCESS } from 'src/constants/server';
 
 @Controller('artists')
 export class ArtistsController {
   constructor(private readonly artistsService: ArtistsService) {}
 
-  @Post()
+  @Post('create')
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createArtistDto: CreateArtistDto) {
     return {
       message: CREATE_SUCCESS,
@@ -15,16 +16,9 @@ export class ArtistsController {
     };
   }
 
-  @Post('/available')
-  async createAvailable() {
-    return {
-      message: CREATE_SUCCESS,
-      data: await this.artistsService.createAvailable() 
-    };
-  }
-
-  @Get()
-  async findAll(@Query() paginationDto: PaginationDto) {
+  @Post()
+  @HttpCode(HttpStatus.OK)
+  async findAll(@Body() paginationDto: PaginationArtistDto) {
 
     return {
       message: GET_ALL_SUCCESS,
@@ -32,14 +26,15 @@ export class ArtistsController {
     };
   }
 
-  @Get(':id')
+  @Post(':id')
+  @HttpCode(HttpStatus.OK)
   async findOne(
     @Param('id') id: string,
-    @Body('select') select: string
+    @Body() findArtistDto: FindArtistDto
   ) {
     return {
       message: GET_SUCCESS,
-      data: await this.artistsService.findOne(id, select)
+      data: await this.artistsService.findOne(id, findArtistDto)
     };
   }
 

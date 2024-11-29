@@ -1,19 +1,20 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateTrackDto, UpdateTrackDto } from './dto';
+import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateTrackDto, FindTrackDto, PaginationTrackDto, UpdateTrackDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Track } from 'src/schemas/track.schema';
 import { Model, Types } from 'mongoose';
-import { albums, albumsForIdMongo, artistsForIdMongo, songs } from 'src/db/fake';
 import { CREATE_FAIL, TRACK_NOT_FOUND } from 'src/constants/server';
-import { convertObjectId } from 'src/utils';
 import { Genre } from 'src/constants/enum';
 import { AlbumsService } from '../albums/albums.service';
+import { parseSelectFields } from 'src/utils';
+import { ArtistsService } from '../artists/artists.service';
 
 @Injectable()
 export class TracksService {
   constructor(
     @InjectModel(Track.name) private trackModel: Model<Track>,
-    private readonly albumService: AlbumsService,
+    @Inject(forwardRef(() => AlbumsService)) private readonly albumService: AlbumsService,
+    private readonly artistService: ArtistsService
   ) {}
 
   async create(createTrackDto: CreateTrackDto) {
@@ -23,101 +24,193 @@ export class TracksService {
     return newTrack;
   }
 
-  async createAvailable() {
-    let listTrack = [];
 
-    for (const track of songs) {
-      // get artists in song
-      let artists = track.artist;
+  async createTrackWithAlbumSingle(createTrackDto: CreateTrackDto) {
+    const newAlbum = await this.albumService.createAlbumSingleToTrack(createTrackDto);
+    createTrackDto.album = newAlbum._id.toString();
 
-      // create track
-      const createTrackDto = new CreateTrackDto();
-      createTrackDto.title = track.title;
-      createTrackDto.duration_ms = 0;
-      createTrackDto.genre = [Genre.POP, Genre.RAP];
-      createTrackDto.description = 'Đây là bài hát của ' + artists[0];
-      createTrackDto.lyric = track.lyric;
-      createTrackDto.image_url = track.cover_img;
-      createTrackDto.url_media = track.url_media;
-      createTrackDto.album_order_position = 0;
-      createTrackDto.isPlayable = true;
-      createTrackDto.isExplicit = true;
-      createTrackDto.release_date = new Date();
-      createTrackDto.creator = artistsForIdMongo[artists[0]];
-      createTrackDto.collaborators = artists.map(artist => artistsForIdMongo[artist]);
-      
-      const newTrack = await this.create(createTrackDto);
-      if (!newTrack) throw new BadRequestException(CREATE_FAIL);
+    const newTrack = await this.create(createTrackDto);
+    if (!newTrack) throw new BadRequestException(CREATE_FAIL);
 
-      
+    await this.albumService.addTrack(newAlbum._id.toString(), newTrack._id);
 
-      // if album exist
-      if (albums[artists[0]]) {
-        let albumId = albumsForIdMongo[albums[artists[0]]];
-        newTrack.album = albumId;
-        
-        const album = await this.albumService.addTrack(albumId, newTrack._id);
-        newTrack.album_order_position = album.tracks.length - 1;
-      }
-
-      newTrack.save();
-
-      // create track artist
-      // for (const artist of artists) {
-      //   const createTrackArtistDto = new CreateTrackArtistDto();
-      //   createTrackArtistDto.track = newTrack._id.toString();
-      //   createTrackArtistDto.artist = artistsForIdMongo[artist];
-
-      //   const newTrackArtist = await this.trackArtistService.create(createTrackArtistDto);
-
-      //   newTrackArtist.save();
-
-      //   // add track artist to track
-      //   await this.addTrackArtist(
-      //     newTrack._id.toString(),
-      //     newTrackArtist._id
-      //   );
-      // }
-
-      listTrack.push(newTrack);
-    }
-
-    return listTrack;
+    return newTrack;
   }
 
-  findAll() {
-    return `This action returns all tracks`;
+  async findAll(paginationTrackDto: PaginationTrackDto) {
+    const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator } = paginationTrackDto;
+    const skip = (page - 1) * limit;
+
+    const tracks = await this.trackModel
+                .find()
+                .select(select)
+                .populate(isPopulateAlbum ? 'album' : '')
+                .populate(isPopulateCreator ? 'creator' : '')
+                .sort(sort)
+                .skip(skip)
+                .limit(limit)
+                .lean();
+
+    return {
+      page: page && +page,
+      limit: limit && +limit,
+      total: await this.trackModel.countDocuments(),
+      data: tracks,
+    };
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, findTrackDto: FindTrackDto) {
+    const { select, isPopulateAlbum, isPopulateCreator } = findTrackDto;
+
     const foundTrack = await this.trackModel
                               .findById(id)
-                              .populate('album')
-                              .populate('creator')
-                              .populate('collaborators')
+                              .select(select)
+                              .populate(isPopulateAlbum ? 'album' : '')
+                              .populate(isPopulateCreator ? 'creator' : '')
                               .lean();
     
-    if (!foundTrack) throw new BadRequestException(TRACK_NOT_FOUND);
+    if (!foundTrack) throw new NotFoundException(TRACK_NOT_FOUND);
 
     return foundTrack;
   }
 
-  update(id: number, updateTrackDto: UpdateTrackDto) {
+  async getTracksByCreator(artistId: string) {
+    const tracks = await this.trackModel
+                .find({
+                  creator: artistId,
+                })
+                .lean();
+    
+    return tracks;
+  }
+
+  async getTracksByArtist(artistId: string, paginationTrackDto: PaginationTrackDto) {
+    const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator } = paginationTrackDto;
+    const skip = (page - 1) * limit;
+
+    const tracks = await this.trackModel
+                .find({
+                  collaborators: artistId,
+                })
+                .select(select)
+                .populate(isPopulateAlbum ? 'album' : '')
+                .populate(isPopulateCreator ? 'creator' : '')
+                .sort(sort)
+                .skip(skip)
+                .limit(limit)
+                .lean();
+    
+    return tracks;
+  }
+
+  async getTopTracksByArtist(artistId: string, paginationTrackDto: PaginationTrackDto) {
+    const { page, limit, select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = paginationTrackDto;
+    const skip = (page - 1) * limit;
+    let newSelect = select;
+    if (isPopulateCollaborators) {
+      newSelect = select + ' collaborators';
+    }
+
+    const tracks = await this.trackModel
+                .find({
+                  collaborators: artistId,
+                })
+                .select(newSelect)
+                .populate(isPopulateAlbum ? 'album' : '')
+                .populate(isPopulateCreator ? 'creator' : '')
+                .sort({
+                  total_play: -1,
+                })
+                .skip(skip)
+                .limit(limit)
+                .lean();
+
+    let tracksJSON = JSON.parse(JSON.stringify(tracks));
+
+    if (isPopulateCollaborators) {
+      tracksJSON = await this.populateCollaborators(tracksJSON);
+    }
+
+    return {
+      page: page && +page,
+      limit: limit && +limit,
+      data: tracksJSON
+    };
+  }
+
+  async getLatestTrackByArtist(artistId: string) {
+    const latestTrack = await this.trackModel
+                .find({
+                  $or: [
+                      { creator: artistId },
+                      { collaborators: artistId }
+                  ]
+                })
+                .sort({ release_date: -1 })
+                .limit(1);
+    
+    if (!latestTrack) throw new NotFoundException(TRACK_NOT_FOUND);
+    
+    return latestTrack[0];
+  }
+
+  async getTracksByAlbum(albumId: string, paginationTrackDto: PaginationTrackDto) {
+    const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = paginationTrackDto;
+    const skip = (page - 1) * limit;
+    let newSelect = select + " album_order_position";
+    if (isPopulateCollaborators) {
+      newSelect = newSelect + ' collaborators';
+    }
+
+    const tracks = await this.trackModel
+                .find({
+                  album: albumId,
+                })
+                .select(newSelect)
+                .populate(isPopulateAlbum ? 'album' : '')
+                .populate(isPopulateCreator ? 'creator' : '')
+                .sort(sort)
+                .skip(skip)
+                .limit(limit)
+                .lean();
+
+    let tracksJSON = JSON.parse(JSON.stringify(tracks));
+
+    if (isPopulateCollaborators) {
+      tracksJSON = await this.populateCollaborators(tracksJSON);
+    }
+
+    return {
+      page: page && +page,
+      limit: limit && +limit,
+      data: tracksJSON
+    };
+  }
+
+  async populateCollaborators(tracks: any) {
+    const collaboratorIds = tracks.flatMap(track => track.collaborators);
+    const collaborators = await this.artistService.findMany(collaboratorIds)
+    const collaboratorMap = new Map(
+      collaborators.map(collaborator => [collaborator._id.toString(), collaborator.name])
+    );
+    tracks.forEach(track => {
+      track.collaborators = track.collaborators.map(collaboratorId => ({
+        id: collaboratorId.toString(),
+        name: collaboratorMap.get(collaboratorId.toString()) || 'Unknown',
+      }));
+    });
+
+    return tracks;
+  }
+
+  async update(id: number, updateTrackDto: UpdateTrackDto) {
     return `This action updates a #${id} track`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} track`;
-  }
+  async remove(id: string) {
+    const deletedTrack = await this.trackModel.findByIdAndDelete(id);
+    if (!deletedTrack) throw new NotFoundException(TRACK_NOT_FOUND);
 
-  async addTrackArtist(trackId: string, trackArtistId: Types.ObjectId) {
-    const track = await this.trackModel.findByIdAndUpdate(
-      trackId,
-      { $push: { trackArtists: trackArtistId } },
-      { new: true }
-    );
-    if (!track) throw new BadRequestException(TRACK_NOT_FOUND);
-
-    return track;
+    return deletedTrack;
   }
 }

@@ -12,6 +12,7 @@ import { TracksModule } from './modules/tracks/tracks.module';
 import { AlbumsModule } from './modules/albums/albums.module';
 import { PlaylistsModule } from './modules/playlists/playlists.module';
 import { Connection } from 'mongoose';
+import { AvailableDataModule } from './modules/available-data/available-data.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { Connection } from 'mongoose';
     TracksModule,
     AlbumsModule,
     PlaylistsModule,
+    AvailableDataModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
