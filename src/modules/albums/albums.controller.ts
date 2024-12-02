@@ -79,11 +79,12 @@ export class AlbumsController {
   @Post('latest/artist/:artistId')
   @HttpCode(HttpStatus.OK)
   async getLatestAlbumByArtist(
-    @Param('artistId') artistId: string
+    @Param('artistId') artistId: string,
+    @Body() findAlbumDto: FindAlbumDto
   ) {
     return {
       message: GET_SUCCESS,
-      data: await this.albumsService.getLatestAlbumByArtist(artistId),
+      data: await this.albumsService.getLatestAlbumByArtist(artistId, findAlbumDto),
     }
   }
 }

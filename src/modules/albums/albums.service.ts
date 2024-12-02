@@ -159,11 +159,17 @@ export class AlbumsService {
     };
   }
 
-  async getLatestAlbumByArtist(artistId: string) {
+  async getLatestAlbumByArtist(artistId: string, findAlbumDto: FindAlbumDto
+  ) {
+    const { select, isPopulateCreator } = findAlbumDto;
+
+
     const latestTrack = await this.tracksService.getLatestTrackByArtist(artistId);
     const lastestAlbumId = latestTrack.album.toString();
     const latestAlbum = await this.albumModel
-                          .findOne({ _id: lastestAlbumId });
+                          .findOne({ _id: lastestAlbumId })
+                          .select(select)
+                          .populate(isPopulateCreator ? 'creator' : '');
     return latestAlbum;
   }
 

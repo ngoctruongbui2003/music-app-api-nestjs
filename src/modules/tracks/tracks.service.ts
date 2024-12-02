@@ -147,7 +147,7 @@ export class TracksService {
     let tracksJSON = JSON.parse(JSON.stringify(tracks));
 
     if (isPopulateCollaborators) {
-      tracksJSON = await this.populateCollaborators(tracksJSON);
+      tracksJSON = await this.populateCollaboratorsByMany(tracksJSON);
     }
 
     return {
