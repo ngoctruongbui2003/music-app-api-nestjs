@@ -60,18 +60,27 @@ export class TracksService {
   }
 
   async findOne(id: string, findTrackDto: FindTrackDto) {
-    const { select, isPopulateAlbum, isPopulateCreator } = findTrackDto;
+    const { select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = findTrackDto;
+    let newSelect = select;
+    if (isPopulateCollaborators) {
+      newSelect = newSelect + ' collaborators';
+    }
 
     const foundTrack = await this.trackModel
                               .findById(id)
-                              .select(select)
+                              .select(newSelect)
                               .populate(isPopulateAlbum ? 'album' : '')
                               .populate(isPopulateCreator ? 'creator' : '')
                               .lean();
     
     if (!foundTrack) throw new NotFoundException(TRACK_NOT_FOUND);
 
-    return foundTrack;
+    let trackJSON = JSON.parse(JSON.stringify(foundTrack));
+
+    if (isPopulateCollaborators) {
+      trackJSON = await this.populateCollaborators(trackJSON);
+    }
+    return trackJSON;
   }
 
   async getTracksByCreator(artistId: string) {
@@ -85,14 +94,18 @@ export class TracksService {
   }
 
   async getTracksByArtist(artistId: string, paginationTrackDto: PaginationTrackDto) {
-    const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator } = paginationTrackDto;
+    const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = paginationTrackDto;
     const skip = (page - 1) * limit;
+    let newSelect = select;
+    if (isPopulateCollaborators) {
+      newSelect = newSelect + ' collaborators';
+    }
 
     const tracks = await this.trackModel
                 .find({
                   collaborators: artistId,
                 })
-                .select(select)
+                .select(newSelect)
                 .populate(isPopulateAlbum ? 'album' : '')
                 .populate(isPopulateCreator ? 'creator' : '')
                 .sort(sort)
@@ -100,7 +113,13 @@ export class TracksService {
                 .limit(limit)
                 .lean();
     
-    return tracks;
+    let tracksJSON = JSON.parse(JSON.stringify(tracks));
+
+    if (isPopulateCollaborators) {
+      tracksJSON = await this.populateCollaboratorsByMany(tracksJSON);
+    }
+    
+    return tracksJSON;
   }
 
   async getTopTracksByArtist(artistId: string, paginationTrackDto: PaginationTrackDto) {
@@ -177,7 +196,7 @@ export class TracksService {
     let tracksJSON = JSON.parse(JSON.stringify(tracks));
 
     if (isPopulateCollaborators) {
-      tracksJSON = await this.populateCollaborators(tracksJSON);
+      tracksJSON = await this.populateCollaboratorsByMany(tracksJSON);
     }
 
     return {
@@ -187,7 +206,7 @@ export class TracksService {
     };
   }
 
-  async populateCollaborators(tracks: any) {
+  async populateCollaboratorsByMany(tracks: any) {
     const collaboratorIds = tracks.flatMap(track => track.collaborators);
     const collaborators = await this.artistService.findMany(collaboratorIds)
     const collaboratorMap = new Map(
@@ -201,6 +220,20 @@ export class TracksService {
     });
 
     return tracks;
+  }
+
+  async populateCollaborators(track: any) {
+    const collaboratorIds = track.collaborators;
+    const collaborators = await this.artistService.findMany(collaboratorIds)
+    const collaboratorMap = new Map(
+      collaborators.map(collaborator => [collaborator._id.toString(), collaborator.name])
+    );
+    track.collaborators = track.collaborators.map(collaboratorId => ({
+      id: collaboratorId.toString(),
+      name: collaboratorMap.get(collaboratorId.toString()) || 'Unknown',
+    }));
+
+    return track;
   }
 
   async update(id: number, updateTrackDto: UpdateTrackDto) {
