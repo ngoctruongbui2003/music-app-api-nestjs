@@ -26,7 +26,7 @@ export class AvailableDataController {
   async createTrackAvailable() {
     return {
       message: CREATE_SUCCESS,
-      data: await this.availableDataService.createTrackAvailable()
+      data: await this.availableDataService.createTrackAndAlbumAvailable()
     }
   }
 }

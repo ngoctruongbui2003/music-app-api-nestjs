@@ -41,6 +41,9 @@ export class TracksService {
     const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator } = paginationTrackDto;
     const skip = (page - 1) * limit;
 
+    console.log(paginationTrackDto);
+    
+
     const tracks = await this.trackModel
                 .find()
                 .select(select)
