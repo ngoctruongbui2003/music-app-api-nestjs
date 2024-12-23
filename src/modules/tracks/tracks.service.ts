@@ -6,7 +6,7 @@ import { Model, Types } from 'mongoose';
 import { CREATE_FAIL, TRACK_NOT_FOUND } from 'src/constants/server';
 import { Genre } from 'src/constants/enum';
 import { AlbumsService } from '../albums/albums.service';
-import { parseSelectFields } from 'src/utils';
+import { convertObjectId, parseSelectFields } from 'src/utils';
 import { ArtistsService } from '../artists/artists.service';
 
 @Injectable()
@@ -106,7 +106,10 @@ export class TracksService {
 
     const tracks = await this.trackModel
                 .find({
-                  collaborators: artistId,
+                  $or: [
+                    { collaborators: artistId },
+                    { creator: artistId }
+                  ]
                 })
                 .select(newSelect)
                 .populate(isPopulateAlbum ? 'album' : '')
@@ -135,7 +138,10 @@ export class TracksService {
 
     const tracks = await this.trackModel
                 .find({
-                  collaborators: artistId,
+                  $or: [
+                    { collaborators: artistId },
+                    { creator: artistId }
+                  ]
                 })
                 .select(newSelect)
                 .populate(isPopulateAlbum ? 'album' : '')
@@ -186,7 +192,7 @@ export class TracksService {
 
     const tracks = await this.trackModel
                 .find({
-                  album: albumId,
+                  album: convertObjectId(albumId),
                 })
                 .select(newSelect)
                 .populate(isPopulateAlbum ? 'album' : '')

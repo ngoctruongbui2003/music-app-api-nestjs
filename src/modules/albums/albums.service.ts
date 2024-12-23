@@ -165,7 +165,8 @@ export class AlbumsService {
 
 
     const latestTrack = await this.tracksService.getLatestTrackByArtist(artistId);
-    const lastestAlbumId = latestTrack.album.toString();
+    if (!latestTrack) return [];
+    const lastestAlbumId = latestTrack.album?.toString();
     const latestAlbum = await this.albumModel
                           .findOne({ _id: lastestAlbumId })
                           .select(select)
