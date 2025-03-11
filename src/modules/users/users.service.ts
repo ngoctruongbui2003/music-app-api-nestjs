@@ -12,14 +12,8 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
   
   async create(createUserDto: CreateUserDto) {
-    const { password, ...rest } = createUserDto;
-    const passwordHash = password ? await hashPassword(password) : "";
-
-    const newUser = await this.userModel.create({
-      ...rest,
-      password: passwordHash,
-    });
-
+    const newUser = await this.userModel.create(createUserDto);
+    if (!newUser) throw new BadRequestException('Create user failed');
     return newUser;
   }
 
@@ -34,7 +28,7 @@ export class UsersService {
     };
   }
 
-  async findOne(id: string, findUserDto: FindUserDto) {
+  async findOne(id: string, findUserDto: FindUserDto = new FindUserDto()) {
     const user = await this.userModel
                 .findById(id)
                 .populate(findUserDto.isPopulatePlaylist ? 'playlists' : '')

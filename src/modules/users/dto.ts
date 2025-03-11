@@ -23,7 +23,8 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['password'] as const)) {
-    
+    @IsOptional()
+    refreshToken: string;
 }
 
 export class UpdateUserPasswordDto {

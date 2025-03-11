@@ -17,12 +17,15 @@ export class User {
     password: string;
 
     @Prop()
+    refreshToken?: string;
+
+    @Prop()
     display_name: string;
 
     @Prop()
     country: string;
 
-    @Prop({ default: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fcellphones.com.vn%2Fsforum%2Favatar-trang&psig=AOvVaw2U5vWnJr7AF4Xvxje4Ez7b&ust=1731720047170000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPjR9YOW3YkDFQAAAAAdAAAAABAE' })
+    @Prop({ default: 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg' })
     avatar_url: string;
 
     @Prop({ default: 0 })

@@ -16,6 +16,7 @@ export const LOGOUT_SUCCESS = 'Đăng xuất thành công';
 export const LOGIN_FAIL = 'Đăng nhập thất bại';
 export const REGISTER_FAIL = 'Đăng ký thất bại';
 export const LOGOUT_FAIL = 'Đăng xuất thất bại';
+export const REFRESH_TOKEN_SUCCESS = 'Lấy token mới thành công';
 
 export const USER_NOT_FOUND = 'Người dùng không tồn tại';
 export const USER_EXISTED = 'Người dùng đã tồn tại';
