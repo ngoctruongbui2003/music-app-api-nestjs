@@ -30,6 +30,10 @@ jobs:
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
           echo "MAILDEV_INCOMING_USER=${{ secrets.MAILDEV_INCOMING_USER }}" >> .env
           echo "MAILDEV_INCOMING_PASS=${{ secrets.MAILDEV_INCOMING_PASS }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> .env
+          echo "JWT_EXPIRES_IN_ACCESS=${{ secrets.JWT_EXPIRES_IN_ACCESS }}" >> .env
+          echo "JWT_EXPIRES_IN_REFRESH=${{ secrets.JWT_EXPIRES_IN_REFRESH }}" >> .env
 
       - name: Build Docker image
         run: docker build -t ${{ secrets.IMAGE_NAME }}-production:${{ secrets.TAG_NAME }} .
