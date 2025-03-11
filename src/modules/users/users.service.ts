@@ -33,6 +33,21 @@ export class UsersService {
                 .findById(id)
                 .populate(findUserDto.isPopulatePlaylist ? 'playlists' : '')
                 .select(findUserDto.chosenSelect);
+
+    return user;
+  }
+
+  async getProlife(id: string) {
+    const user = await this.userModel
+                .findById(id)
+                .select('-password -refreshToken');
+    return user;
+  }
+
+  async getPublicUser(id: string) {
+    const user = await this.userModel
+                .findById(id)
+                .select('display_name avatar_url followers');
     return user;
   }
 

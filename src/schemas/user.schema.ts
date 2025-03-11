@@ -37,61 +37,64 @@ export class User {
     @Prop({ enum: AccountType, default: AccountType.LOCAL })
     account_type: string;
 
+    @Prop({ default: 0 })
+    publicTrackCount: number;
+
     // RELATIONSHIP
-    @Prop({
-        type: [
-            {
-                track: { type: Types.ObjectId, ref: ModelName.TRACK },
-                addedAt: { type: Date, default: Date.now },
-            },
-        ],
-        default: [],
-    })
-    history: { track: Track; addedAt: Date }[];
+    // @Prop({
+    //     type: [
+    //         {
+    //             track: { type: Types.ObjectId, ref: ModelName.TRACK },
+    //             addedAt: { type: Date, default: Date.now },
+    //         },
+    //     ],
+    //     default: [],
+    // })
+    // history: { track: Track; addedAt: Date }[];
 
-    @Prop({
-        type: [
-            {
-                track: { type: Types.ObjectId, ref: ModelName.PLAYLIST },
-                addedAt: { type: Date, default: Date.now },
-            },
-        ],
-        default: []
-    })
-    playlists: Playlist[];
+    // @Prop({
+    //     type: [
+    //         {
+    //             track: { type: Types.ObjectId, ref: ModelName.PLAYLIST },
+    //             addedAt: { type: Date, default: Date.now },
+    //         },
+    //     ],
+    //     default: []
+    // })
+    // playlists: Playlist[];
 
-    @Prop({
-        type: [
-            {
-                track: { type: Types.ObjectId, ref: ModelName.TRACK },
-                addedAt: { type: Date, default: Date.now },
-            },
-        ],
-        default: []
-    })
-    favorite_tracks: Track[];
+    // @Prop({
+    //     type: [
+    //         {
+    //             track: { type: Types.ObjectId, ref: ModelName.TRACK },
+    //             addedAt: { type: Date, default: Date.now },
+    //         },
+    //     ],
+    //     default: []
+    // })
+    // favorite_tracks: Track[];
 
-    @Prop({
-        type: [
-            {
-                track: { type: Types.ObjectId, ref: ModelName.ALBUM },
-                addedAt: { type: Date, default: Date.now },
-            },
-        ],
-        default: []
-    })
-    favorite_albums: Album[];
+    // @Prop({
+    //     type: [
+    //         {
+    //             track: { type: Types.ObjectId, ref: ModelName.ALBUM },
+    //             addedAt: { type: Date, default: Date.now },
+    //         },
+    //     ],
+    //     default: []
+    // })
+    // favorite_albums: Album[];
 
-    @Prop({
-        type: [
-            {
-                track: { type: Types.ObjectId, ref: ModelName.ARTIST },
-                addedAt: { type: Date, default: Date.now },
-            },
-        ],
-        default: []
-    })
-    favorite_artists: Artist[];
+    // @Prop({
+    //     type: [
+    //         {
+    //             track: { type: Types.ObjectId, ref: ModelName.ARTIST },
+    //             addedAt: { type: Date, default: Date.now },
+    //         },
+    //     ],
+    //     default: []
+    // })
+    // favorite_artists: Artist[];
 
 }
 
