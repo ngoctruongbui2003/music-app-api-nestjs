@@ -59,7 +59,7 @@ export class AlbumsService {
 
   async findOne(
     id: string,
-    findAlbumDto: FindAlbumDto
+    findAlbumDto: FindAlbumDto = {}
   ) {
     const { select, isPopulateCreator } = findAlbumDto;
     const album = await this.albumModel

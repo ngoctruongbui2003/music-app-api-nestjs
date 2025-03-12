@@ -1,4 +1,5 @@
 export const CREATE_SUCCESS = 'Thêm mới thành công';
+export const ADD_SUCCESS = 'Thêm thành công';
 export const GET_SUCCESS = 'Lấy dữ liệu thành công';
 export const GET_ALL_SUCCESS = 'Lấy tất cả dữ liệu thành công';
 export const UPDATE_SUCCESS = 'Cập nhật thành công.';

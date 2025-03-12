@@ -1,19 +1,21 @@
 import { TracksService } from './../tracks/tracks.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AddTracksDto, CreatePlaylistDto } from './dto';
+import { AddAlbumDto, AddTrackDto, AddTracksDto, CreatePlaylistDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Playlist } from 'src/schemas/playlist.schema';
 import { Model } from 'mongoose';
 import { UserLibrary } from 'src/schemas/user-library.schema';
 import { convertObjectId } from 'src/utils';
-import { PLAYLIST_NOT_FOUND, TRACK_NOT_FOUND } from 'src/constants/server';
+import { ALBUM_NOT_FOUND, PLAYLIST_NOT_FOUND, TRACK_NOT_FOUND } from 'src/constants/server';
+import { AlbumsService } from '../albums/albums.service';
 
 @Injectable()
 export class PlaylistsService {
   constructor(
     @InjectModel(Playlist.name) private playlistModel: Model<Playlist>,
     @InjectModel(UserLibrary.name) private userLibraryModel: Model<UserLibrary>,
-    private readonly tracksService: TracksService
+    private readonly tracksService: TracksService,
+    private readonly albumsService: AlbumsService
   ) {}
 
   async create(userId: string, createPlaylistDto: CreatePlaylistDto) {
@@ -33,6 +35,19 @@ export class PlaylistsService {
     };
   }
 
+  
+  async getTracksInPlaylist(userId: string, playlistId: string) {
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId).populate('tracks.track');
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Check created by is the same as the user
+    const isSameCreator = playlist.createdBy.toString() === userId;
+    if (!isSameCreator) throw new BadRequestException('You are not allowed to view tracks in this playlist');
+
+    return playlist.tracks;
+  }
+
   // async savePlaylistToLibrary(userId: string, savePlaylistDto: SavePlaylistDto) {
   //   let userLibrary = await this.userLibraryModel.findOne({ user: userId });
   //   if (!userLibrary) {
@@ -45,7 +60,7 @@ export class PlaylistsService {
   //   return userLibrary;
   // }
 
-  async addTrackToPlaylist(userId: string, addTracksDto: AddTracksDto) {
+  async addTrackToPlaylist(userId: string, addTracksDto: AddTrackDto) {
     const { trackId, playlistId } = addTracksDto;
 
     // 1. Check if track exists
@@ -81,7 +96,60 @@ export class PlaylistsService {
     );
   }
 
-  async removeTrackFromPlaylist(userId: string, addTracksDto: AddTracksDto) {
+  async addAlbumToPlaylist(userId: string, addAlbumDto: AddAlbumDto) {
+    const { albumId, playlistId } = addAlbumDto;
+
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId);
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Check created by is the same as the user
+    const isSameCreator = playlist.createdBy.toString() === userId;
+    if (!isSameCreator) throw new BadRequestException('You are not allowed to add tracks to this playlist');
+
+    // 3. Check if album exists
+    const album = await this.albumsService.findOne(albumId);
+    if (!album) throw new BadRequestException(ALBUM_NOT_FOUND);
+
+    // 4. Get album tracks
+    const { data } = await this.tracksService.getTracksByAlbum(albumId);
+    const trackIds = data.map(track => track._id.toString());
+
+    // 5. Add tracks to the playlist
+    return await this.addTracksToPlaylist(userId, { trackIds, playlistId });
+  }
+
+  private async addTracksToPlaylist(userId: string, addTracksDto: AddTracksDto) {
+    const { trackIds, playlistId } = addTracksDto;
+
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId);
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Filter out tracks that are already in the playlist
+    const existingTrackIds = playlist.tracks.map(track => track.track.toString());
+    const newTrackIds = trackIds.filter(trackId => !existingTrackIds.includes(trackId));
+
+    if (newTrackIds.length === 0) throw new BadRequestException('All tracks are already in the playlist');
+
+    // 3. Get new positions for the added tracks
+    const currentMaxPosition = playlist.tracks.length > 0 
+      ? Math.max(...playlist.tracks.map(track => track.position)) 
+      : -1;
+
+    const newTracks = newTrackIds.map((trackId, index) => ({
+      track: trackId,
+      position: currentMaxPosition + index + 1,
+    }));
+
+    return await this.playlistModel.findByIdAndUpdate(
+      playlistId,
+      { $push: { tracks: { $each: newTracks } } },
+      { new: true }
+    );
+  }
+
+  async removeTrackFromPlaylist(userId: string, addTracksDto: AddTrackDto) {
     const { trackId, playlistId } = addTracksDto;
 
     // 1. Check if playlist exists
@@ -107,14 +175,4 @@ export class PlaylistsService {
 
     return await playlist.save();
   }
-
-  // async addAlbumToPlaylist(addAlbumDto: AddAlbumDto) {
-  //   const albumTracks = await this.trackModel.find({ album: addAlbumDto.albumId }).select('_id');
-  //   const formattedTracks = albumTracks.map((track, index) => ({ track: track._id, position: index + 1 }));
-  //   return this.playlistModel.findByIdAndUpdate(
-  //     addAlbumDto.playlistId,
-  //     { $push: { tracks: { $each: formattedTracks, $sort: { position: 1 } } } },
-  //     { new: true }
-  //   ).populate('tracks.track');
-  // }
 }

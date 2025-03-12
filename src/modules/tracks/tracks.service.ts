@@ -182,7 +182,7 @@ export class TracksService {
     return latestTrack[0];
   }
 
-  async getTracksByAlbum(albumId: string, paginationTrackDto: PaginationTrackDto) {
+  async getTracksByAlbum(albumId: string, paginationTrackDto: PaginationTrackDto = {}) {
     const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = paginationTrackDto;
     const skip = (page - 1) * limit;
     let newSelect = select + " album_order_position";
