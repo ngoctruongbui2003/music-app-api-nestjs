@@ -1,33 +1,50 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+// playlist.controller.ts
+import { Controller, Post, Get, Body, Param, Request, UseGuards } from '@nestjs/common';
 import { PlaylistsService } from './playlists.service';
-import { CreatePlaylistDto, UpdatePlaylistDto } from './dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AddTracksDto, CreatePlaylistDto } from './dto';
+import { CREATE_SUCCESS, GET_SUCCESS } from 'src/constants/server';
 
 @Controller('playlists')
 export class PlaylistsController {
-  constructor(private readonly playlistsService: PlaylistsService) {}
+  constructor(private readonly playlistService: PlaylistsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createPlaylistDto: CreatePlaylistDto) {
-    return this.playlistsService.create(createPlaylistDto);
+  async create(@Request() req, @Body() createPlaylistDto: CreatePlaylistDto) {
+    return {
+      message: CREATE_SUCCESS,
+      data: await this.playlistService.create(req.user.id, createPlaylistDto)
+    };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.playlistsService.findAll();
+  async findByUser(@Request() req) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.playlistService.findByUser(req.user.id)
+    };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.playlistsService.findOne(+id);
+  // @UseGuards(JwtAuthGuard)
+  // @Post('save')
+  // async savePlaylistToLibrary(@Request() req, @Body() savePlaylistDto: SavePlaylistDto) {
+  //   return this.playlistService.savePlaylistToLibrary(req.user.userId, savePlaylistDto);
+  // }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('add-track')
+  async addTrackToPlaylist(@Request() req, @Body() addTracksDto: AddTracksDto) {
+    return {
+      message: CREATE_SUCCESS,
+      data: await this.playlistService.addTrackToPlaylist(req.user.id, addTracksDto)
+    };
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlaylistDto: UpdatePlaylistDto) {
-    return this.playlistsService.update(+id, updatePlaylistDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.playlistsService.remove(+id);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Post('add-album')
+  // async addAlbumToPlaylist(@Body() addAlbumDto: AddAlbumDto) {
+  //   return this.playlistService.addAlbumToPlaylist(addAlbumDto);
+  // }
 }

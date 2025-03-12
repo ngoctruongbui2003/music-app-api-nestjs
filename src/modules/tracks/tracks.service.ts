@@ -62,7 +62,7 @@ export class TracksService {
     };
   }
 
-  async findOne(id: string, findTrackDto: FindTrackDto) {
+  async findOne(id: string, findTrackDto: FindTrackDto = {}) {
     const { select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = findTrackDto;
     let newSelect = select;
     if (isPopulateCollaborators) {
