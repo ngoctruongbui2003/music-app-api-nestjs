@@ -42,6 +42,15 @@ export class PlaylistsController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('remove-track')
+  async removeTrackFromPlaylist(@Request() req, @Body() addTracksDto: AddTracksDto) {
+    return {
+      message: CREATE_SUCCESS,
+      data: await this.playlistService.removeTrackFromPlaylist(req.user.id, addTracksDto)
+    };
+  }
+
   // @UseGuards(JwtAuthGuard)
   // @Post('add-album')
   // async addAlbumToPlaylist(@Body() addAlbumDto: AddAlbumDto) {

@@ -27,7 +27,6 @@ export class PlaylistsService {
   async findByUser(userId: string) {
     const foundPlaylist = await this.playlistModel
                                 .find({ createdBy: convertObjectId(userId) })
-                                .populate('tracks.track')
     return {
       total: foundPlaylist.length,
       data: foundPlaylist
@@ -66,13 +65,13 @@ export class PlaylistsService {
     if (isTrackExist) throw new BadRequestException('Track is already in the playlist');
   
     // 5. Get new position for the added track
-    const maxPosition = playlist.tracks.length > 0 
-      ? Math.max(...playlist.tracks.map(track => track.position)) 
+    const newPosition = playlist.tracks.length > 0 
+      ? Math.max(...playlist.tracks.map(track => track.position)) + 1
       : 0;
   
     const newTrack = {
       track: trackId,
-      position: maxPosition + 1,
+      position: newPosition,
     };
   
     return await this.playlistModel.findByIdAndUpdate(
@@ -80,6 +79,33 @@ export class PlaylistsService {
       { $push: { tracks: newTrack } },
       { new: true }
     );
+  }
+
+  async removeTrackFromPlaylist(userId: string, addTracksDto: AddTracksDto) {
+    const { trackId, playlistId } = addTracksDto;
+
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId);
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Check created by is the same as the user
+    const isSameCreator = playlist.createdBy.toString() === userId;
+    if (!isSameCreator) throw new BadRequestException('You are not allowed to remove tracks from this playlist');
+
+    // 3. Check if the track is in the playlist
+    const trackIndex = playlist.tracks.findIndex(track => track.track.toString() === trackId);
+    if (trackIndex === -1) throw new BadRequestException('Track is not in the playlist');
+
+    // 4. Remove the track from the playlist
+    playlist.tracks.splice(trackIndex, 1);
+
+    // 5. Update positions of remaining tracks
+    playlist.tracks = playlist.tracks.map((track, index) => ({
+      ...track,
+      position: index < trackIndex ? track.position : track.position - 1,
+    }));
+
+    return await playlist.save();
   }
 
   // async addAlbumToPlaylist(addAlbumDto: AddAlbumDto) {
