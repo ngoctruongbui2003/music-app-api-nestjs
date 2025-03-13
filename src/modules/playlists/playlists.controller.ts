@@ -1,5 +1,5 @@
 // playlist.controller.ts
-import { Controller, Post, Get, Body, Param, Request, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Request, UseGuards, HttpCode, HttpStatus, Patch } from '@nestjs/common';
 import { PlaylistsService } from './playlists.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AddAlbumDto, AddPlaylistDto, AddTrackDto, AddTracksDto, CreatePlaylistDto } from './dto';
@@ -71,6 +71,26 @@ export class PlaylistsController {
     return {
       message: CREATE_SUCCESS,
       data: await this.playlistService.removeTrackFromPlaylist(req.user.id, addTracksDto)
+    };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Patch(':playlistId/public')
+  async togglePlaylistPublic(@Request() req, @Param('playlistId') playlistId: string) {
+    return {
+      message: CREATE_SUCCESS,
+      data: await this.playlistService.togglePlaylistVisibility(req.user.id, playlistId, true)
+    };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Patch(':playlistId/private')
+  async togglePlaylistPrivate(@Request() req, @Param('playlistId') playlistId: string) {
+    return {
+      message: CREATE_SUCCESS,
+      data: await this.playlistService.togglePlaylistVisibility(req.user.id, playlistId, false)
     };
   }
 

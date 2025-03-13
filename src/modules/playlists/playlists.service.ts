@@ -200,4 +200,19 @@ export class PlaylistsService {
 
     return await playlist.save();
   }
+
+  async togglePlaylistVisibility(userId: string, playlistId: string, isPublic: boolean) {
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId);
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Check created by is the same as the user
+    const isSameCreator = playlist.createdBy.toString() === userId;
+    if (!isSameCreator) throw new BadRequestException('You are not allowed to change the visibility of this playlist');
+
+    // 3. Toggle the visibility
+    playlist.isPublic = isPublic;
+
+    return await playlist.save();
+  }
 }
