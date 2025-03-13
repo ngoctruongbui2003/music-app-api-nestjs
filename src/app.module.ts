@@ -13,6 +13,7 @@ import { AlbumsModule } from './modules/albums/albums.module';
 import { PlaylistsModule } from './modules/playlists/playlists.module';
 import { Connection } from 'mongoose';
 import { AvailableDataModule } from './modules/available-data/available-data.module';
+import { UserLibraryModule } from './modules/user-library/user-library.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AvailableDataModule } from './modules/available-data/available-data.mod
     AlbumsModule,
     PlaylistsModule,
     AvailableDataModule,
+    UserLibraryModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
