@@ -1,6 +1,6 @@
 import { TracksService } from './../tracks/tracks.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AddAlbumDto, AddTrackDto, AddTracksDto, CreatePlaylistDto } from './dto';
+import { AddAlbumDto, AddTrackDto, AddTracksDto, CreatePlaylistDto, AddPlaylistDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Playlist } from 'src/schemas/playlist.schema';
 import { Model } from 'mongoose';
@@ -35,15 +35,14 @@ export class PlaylistsService {
     };
   }
 
+  async findOne(playlistId: string) {
+    return await this.playlistModel.findById(playlistId);
+  }
   
-  async getTracksInPlaylist(userId: string, playlistId: string) {
-    // 1. Check if playlist exists
+  async getTracksInPlaylist(playlistId: string) {
+    // Check if playlist exists
     const playlist = await this.playlistModel.findById(playlistId).populate('tracks.track');
     if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
-
-    // 2. Check created by is the same as the user
-    const isSameCreator = playlist.createdBy.toString() === userId;
-    if (!isSameCreator) throw new BadRequestException('You are not allowed to view tracks in this playlist');
 
     return playlist.tracks;
   }
@@ -116,10 +115,36 @@ export class PlaylistsService {
     const trackIds = data.map(track => track._id.toString());
 
     // 5. Add tracks to the playlist
-    return await this.addTracksToPlaylist(userId, { trackIds, playlistId });
+    return await this.addTracksToPlaylist({ trackIds, playlistId });
   }
 
-  private async addTracksToPlaylist(userId: string, addTracksDto: AddTracksDto) {
+  async addPlaylistToPlaylist(userId: string, addPlaylistDto: AddPlaylistDto) {
+    const { playlistId, otherPlaylistId } = addPlaylistDto;
+
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId);
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Check created by is the same as the user
+    const isSameCreator = playlist.createdBy.toString() === userId;
+    if (!isSameCreator) throw new BadRequestException('You are not allowed to add tracks to this playlist');
+
+    // 3. Check if remaining playlist exists
+    const remainingPlaylist = await this.findOne(otherPlaylistId);
+    if (!remainingPlaylist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 4. Check if the remaining playlist is public
+    if (!remainingPlaylist.isPublic) throw new BadRequestException('Playlist is private');
+
+    // 5. Get remaining playlist tracks
+    const data = await this.getTracksInPlaylist(otherPlaylistId);
+    const trackIds = data.map(track => track.track._id.toString());
+
+    // 6. Add tracks to the playlist
+    return await this.addTracksToPlaylist({ trackIds, playlistId });
+  }
+
+  private async addTracksToPlaylist(addTracksDto: AddTracksDto) {
     const { trackIds, playlistId } = addTracksDto;
 
     // 1. Check if playlist exists

@@ -1,8 +1,8 @@
 // playlist.controller.ts
-import { Controller, Post, Get, Body, Param, Request, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Request, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { PlaylistsService } from './playlists.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { AddAlbumDto, AddTrackDto, AddTracksDto, CreatePlaylistDto } from './dto';
+import { AddAlbumDto, AddPlaylistDto, AddTrackDto, AddTracksDto, CreatePlaylistDto } from './dto';
 import { ADD_SUCCESS, CREATE_SUCCESS, GET_SUCCESS } from 'src/constants/server';
 
 @Controller('playlists')
@@ -10,6 +10,7 @@ export class PlaylistsController {
   constructor(private readonly playlistService: PlaylistsService) {}
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post()
   async create(@Request() req, @Body() createPlaylistDto: CreatePlaylistDto) {
     return {
@@ -34,6 +35,7 @@ export class PlaylistsController {
   // }
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('add-track')
   async addTrackToPlaylist(@Request() req, @Body() addTracksDto: AddTrackDto) {
     return {
@@ -43,6 +45,7 @@ export class PlaylistsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('add-tracks-from-album')
   async addTracksFromAlbumToPlaylist(@Request() req, @Body() addAlbumDto: AddAlbumDto) {
     return {
@@ -52,6 +55,17 @@ export class PlaylistsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post('add-tracks-from-playlist')
+  async addTracksFromPlaylistToPlaylist(@Request() req, @Body() addPlaylistDto: AddPlaylistDto) {
+    return {
+      message: ADD_SUCCESS,
+      data: await this.playlistService.addPlaylistToPlaylist(req.user.id, addPlaylistDto)
+    };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('remove-track')
   async removeTrackFromPlaylist(@Request() req, @Body() addTracksDto: AddTrackDto) {
     return {
