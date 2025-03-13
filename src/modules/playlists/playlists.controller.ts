@@ -94,6 +94,15 @@ export class PlaylistsController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('count')
+  async getUserPlaylistCount(@Request() req) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.playlistService.getNumberOfPlaylistsByUser(req.user.id),
+    };
+  }
+
   // @UseGuards(JwtAuthGuard)
   // @Post('add-album')
   // async addAlbumToPlaylist(@Body() addAlbumDto: AddAlbumDto) {

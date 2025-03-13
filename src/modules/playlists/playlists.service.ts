@@ -215,4 +215,9 @@ export class PlaylistsService {
 
     return await playlist.save();
   }
+
+  async getNumberOfPlaylistsByUser(userId: string) {
+    const count = await this.playlistModel.countDocuments({ createdBy: convertObjectId(userId) });
+    return { count };
+  }
 }
