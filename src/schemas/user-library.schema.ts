@@ -22,6 +22,26 @@ class SavedArtist {
     isFavourite: boolean;
 }
 
+
+@Schema({ _id: false })
+class SavedTrack {
+    @Prop({ type: Types.ObjectId, ref: ModelName.TRACK, required: true })
+    trackId: Types.ObjectId;
+
+    @Prop({ default: false })
+    isFavourite: boolean;
+}
+
+
+@Schema({ _id: false })
+class SavedAlbum {
+    @Prop({ type: Types.ObjectId, ref: ModelName.ALBUM, required: true })
+    albumId: Types.ObjectId;
+
+    @Prop({ default: false })
+    isFavourite: boolean;
+}
+
     @Schema({ timestamps: true, collection: 'user_libraries' })
     export class UserLibrary {
         @Prop({ type: Types.ObjectId, ref: ModelName.USER, required: true })
@@ -32,6 +52,12 @@ class SavedArtist {
 
         @Prop({ type: [SavedArtist], default: [] })
         savedArtists: SavedArtist[];
+
+        @Prop({ type: [SavedTrack], default: [] })
+        savedTracks: SavedTrack[];
+
+        @Prop({ type: [SavedAlbum], default: [] })
+        savedAlbums: SavedAlbum[];
     }
 
 export const UserLibrarySchema = SchemaFactory.createForClass(UserLibrary);

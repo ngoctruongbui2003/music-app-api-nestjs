@@ -1,145 +1,52 @@
 import { PaginationDto } from './../../shared/dto';
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { ModelName } from 'src/constants/enum';
-import { CREATE_FAIL, USER_EXISTED } from "src/constants/server";
-import { UserLibrary, UserLibraryDocument } from "src/schemas/user-library.schema";
-import { convertObjectId, parseSortFields } from 'src/utils';
+import { UserLibraryRepository } from './user-library.repository';
+import { ArtistLibraryStrategy } from './stragies/artist.strategy';
+import { TrackLibraryStrategy } from './stragies/track.strategy';
+import { PlaylistLibraryStrategy } from './stragies/playlist.strategy';
+import { AlbumLibraryStrategy } from './stragies/album.strategy';
+import { LibraryItemType } from './dto';
 
 @Injectable()
 export class UserLibraryService {
-    constructor(
-        @InjectModel(UserLibrary.name) private userLibraryModel: Model<UserLibraryDocument>
-    ) {}
+    private strategies: any;
 
-    async create(userId: string) {
-        const userLibrary = await this.userLibraryModel.findOne({ userId });
-        if (userLibrary) throw new BadRequestException(USER_EXISTED);
-
-        const newUserLibrary = await this.userLibraryModel.create({ userId: convertObjectId(userId) });
-        if (!newUserLibrary) throw new BadRequestException(CREATE_FAIL);
-
-        return newUserLibrary;
+    constructor(private repository: UserLibraryRepository) {
+        this.strategies = {
+            Artist: new ArtistLibraryStrategy(this.repository),
+            Track: new TrackLibraryStrategy(this.repository),
+            Playlist: new PlaylistLibraryStrategy(this.repository),
+            Album: new AlbumLibraryStrategy(this.repository),
+        };
     }
 
-    async addArtistToLibrary(userId: string, artistId: string, isFavourite: boolean = false) {
-        const userLibrary = await this.userLibraryModel.findOne({ userId: convertObjectId(userId) });
-    
-        // 1. If userLibrary doesn't exist, create a new one
-        if (!userLibrary) {
-            return await this.userLibraryModel.create({
-                userId: convertObjectId(userId),
-                savedArtists: [{ artistId: convertObjectId(artistId), isFavourite }]
-            });
+    async addToLibrary<T extends LibraryItemType>(userId: string, itemId: string, type: T, isFavourite = false) {
+        return this.strategies[type].add(userId, itemId, isFavourite);
+    }
+
+    async removeFromLibrary<T extends LibraryItemType>(userId: string, itemId: string, type: T) {
+        return this.strategies[type].remove(userId, itemId);
+    }
+
+    async toggleFavourite<T extends LibraryItemType>(userId: string, itemId: string, type: T, isFavourite: boolean) {
+        const userLibrary = await this.repository.findOrCreate(userId);
+        const savedItems = userLibrary[`saved${type}s`];
+
+        const itemIndex = savedItems.findIndex(item => item[`${type.toLowerCase()}Id`].toString() === itemId);
+        if (itemIndex === -1) {
+            throw new BadRequestException(`${type} not found in user library!`);
         }
-    
-        // 2. Check if artist is already saved
-        const isArtistSaved = userLibrary.savedArtists.some(
-            (item) => item.artistId.toString() === artistId
-        );
-    
-        if (isArtistSaved) {
-            throw new BadRequestException('Artist này đã được lưu!');
-        }
-    
-        // 3. Add artist to savedArtists
-        userLibrary.savedArtists.push({ artistId: convertObjectId(artistId), isFavourite });
+
+        savedItems[itemIndex].isFavourite = isFavourite;
         await userLibrary.save();
-    
         return userLibrary;
     }
-
-    async removeArtistFromLibrary(userId: string, artistId: string) {
-        return this.userLibraryModel.findOneAndUpdate(
-            { userId: convertObjectId(userId) },
-            { $pull: { savedArtists: { artistId: convertObjectId(artistId) } } },
-            { new: true }
-        );
+    
+    async getSavedItems<T extends LibraryItemType>(userId: string, type: T, paginationDto: PaginationDto) {
+        return this.repository.getSavedItems(userId, paginationDto, type);
     }
 
-    async toggleFavouriteArtist(userId: string, artistId: string, isFavourite: boolean) {
-        const userLibrary = await this.userLibraryModel.findOne({ userId: convertObjectId(userId) });
-        if (!userLibrary) {
-            throw new BadRequestException('User library not found!');
-        }
-    
-        const artistIndex = userLibrary.savedArtists.findIndex(
-            (item) => item.artistId.toString() === artistId
-        );
-    
-        if (artistIndex === -1) {
-            throw new BadRequestException('Artist not found in user library!');
-        }
-    
-        // Cập nhật trực tiếp giá trị isFavourite trong mảng savedArtists
-        userLibrary.savedArtists[artistIndex].isFavourite = isFavourite;
-    
-        // Lưu lại thay đổi
-        await userLibrary.save();
-    
-        return userLibrary;
-    }
-
-    private async getSavedArtistsQuery(userId: string, paginationDto: PaginationDto, isFavourite?: boolean) {
-        const { page, limit, sort } = paginationDto;
-        const skip = (page - 1) * limit;
-        let sortCriteria = {};
-    
-        if (sort) {
-            sortCriteria = parseSortFields(sort);
-        }
-    
-        const pipeline: any[] = [
-            { $match: { userId: convertObjectId(userId) } },
-            { $unwind: "$savedArtists" }
-        ];
-    
-        if (isFavourite !== undefined) {
-            pipeline.push({ $match: { "savedArtists.isFavourite": isFavourite } });
-        }
-    
-        pipeline.push(
-            {
-                $lookup: {
-                    from: "artists",  // Tên collection của Artist
-                    localField: "savedArtists.artistId",
-                    foreignField: "_id",
-                    as: "savedArtists.artistInfo"
-                }
-            },
-            { $unwind: "$savedArtists.artistInfo" },
-            {
-                $project: {
-                    _id: 1,
-                    "savedArtists.artistId": 1,
-                    "savedArtists.isFavourite": 1,
-                    "savedArtists.artistInfo.name": 1,
-                    "savedArtists.artistInfo.avatar_url": 1
-                }
-            },
-            { $sort: Object.keys(sortCriteria).length > 0 ? sortCriteria : { createdAt: -1 } },
-            { $skip: skip },
-            { $limit: limit },
-            {
-                $group: {
-                    _id: "$_id",
-                    savedArtists: { $push: "$savedArtists" }
-                }
-            }
-        );
-    
-        const userLibrary = await this.userLibraryModel.aggregate(pipeline);
-        return userLibrary[0]?.savedArtists || [];
-    }
-    
-    // Hàm lấy tất cả artist đã lưu
-    async getSavedArtists(userId: string, paginationDto: PaginationDto) {
-        return this.getSavedArtistsQuery(userId, paginationDto);
-    }
-    
-    // Hàm lấy artist theo trạng thái favourite
-    async getArtistsByFavouriteStatus(userId: string, isFavourite: boolean, paginationDto: PaginationDto) {
-        return this.getSavedArtistsQuery(userId, paginationDto, isFavourite);
+    async getItemsByFavouriteStatus<T extends LibraryItemType>(userId: string, type: T, isFavourite: boolean, paginationDto: PaginationDto) {
+        return this.repository.getSavedItems(userId, paginationDto, type, isFavourite);
     }
 }

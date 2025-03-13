@@ -3,71 +3,89 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { UserLibraryService } from "./user-library.service";
 import { GET_SUCCESS } from "src/constants/server";
 import { PaginationDto } from "src/shared";
+import { LibraryItemType } from "./dto";
 
 @Controller('user-library')
 @UseGuards(JwtAuthGuard)
 export class UserLibraryController {
     constructor(private readonly userLibraryService: UserLibraryService) {}
 
-    @Post('artists')
+    @Post(':type')
     @HttpCode(HttpStatus.OK)
-    async getSavedArtists(@Request() req, @Body() paginationDto: PaginationDto) {
+    async getSavedItems(
+        @Request() req, 
+        @Param('type') type: LibraryItemType, 
+        @Body() paginationDto: PaginationDto
+    ) {
         return {
             message: GET_SUCCESS,
-            data: await this.userLibraryService.getSavedArtists(req.user.id, paginationDto)
+            data: await this.userLibraryService.getSavedItems(req.user.id, type, paginationDto)
         };
     }
 
-    @Post('artists/favourite')
+    @Post(':type/favourite')
     @HttpCode(HttpStatus.OK)
-    async getFavouriteArtists(@Request() req, @Body() paginationDto: PaginationDto) {
+    async getFavouriteItems(
+        @Request() req, 
+        @Param('type') type: LibraryItemType, 
+        @Body() paginationDto: PaginationDto
+    ) {
         return {
             message: GET_SUCCESS,
-            data: await this.userLibraryService.getArtistsByFavouriteStatus(req.user.id, true, paginationDto)
+            data: await this.userLibraryService.getItemsByFavouriteStatus(req.user.id, type, true, paginationDto)
         };
     }
 
-    @Post('artists/not-favourite')
+    @Post(':type/not-favourite')
     @HttpCode(HttpStatus.OK)
-    async getNonFavouriteArtists(@Request() req, @Body() paginationDto: PaginationDto) {
+    async getNonFavouriteItems(
+        @Request() req, 
+        @Param('type') type: LibraryItemType, 
+        @Body() paginationDto: PaginationDto
+    ) {
         return {
             message: GET_SUCCESS,
-            data: await this.userLibraryService.getArtistsByFavouriteStatus(req.user.id, false, paginationDto)
+            data: await this.userLibraryService.getItemsByFavouriteStatus(req.user.id, type, false, paginationDto)
         };
     }
 
-    @Post('artist/:artistId')
+    @Post(':type/:itemId')
     @HttpCode(HttpStatus.OK)
-    async addArtist(@Request() req, @Param('artistId') artistId: string) {
+    async addItem(
+        @Request() req, 
+        @Param('type') type: LibraryItemType, 
+        @Param('itemId') itemId: string
+    ) {
         return {
             message: GET_SUCCESS,
-            data: await this.userLibraryService.addArtistToLibrary(req.user.id, artistId)
+            data: await this.userLibraryService.addToLibrary(req.user.id, itemId, type)
         };
     }
 
-    @Patch('remove-artist/:artistId')
+    @Patch('remove/:type/:itemId')
     @HttpCode(HttpStatus.OK)
-    async removeArtist(@Request() req, @Param('artistId') artistId: string) {
+    async removeItem(
+        @Request() req, 
+        @Param('type') type: LibraryItemType, 
+        @Param('itemId') itemId: string
+    ) {
         return {
             message: GET_SUCCESS,
-            data: await this.userLibraryService.removeArtistFromLibrary(req.user.id, artistId)
+            data: await this.userLibraryService.removeFromLibrary(req.user.id, itemId, type)
         };
     }
 
-    @Patch('artist/:artistId/toggle-favourite')
+    @Patch(':type/:itemId/toggle-favourite')
     @HttpCode(HttpStatus.OK)
     async toggleFavourite(
         @Request() req,
-        @Param('artistId') artistId: string, 
+        @Param('type') type: LibraryItemType,
+        @Param('itemId') itemId: string, 
         @Body('isFavourite') isFavourite: string 
     ) {
         return {
             message: GET_SUCCESS,
-            data: await this.userLibraryService.toggleFavouriteArtist(
-                req.user.id,
-                artistId,
-                isFavourite === 'true'
-            )
+            data: await this.userLibraryService.toggleFavourite(req.user.id, itemId, type, isFavourite === 'true')
         };
     }
 }
