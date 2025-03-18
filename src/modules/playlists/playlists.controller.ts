@@ -28,6 +28,24 @@ export class PlaylistsController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('count')
+  async getUserPlaylistCount(@Request() req) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.playlistService.getNumberOfPlaylistsByUser(req.user.id),
+    };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':playlistId')
+  async findOne(@Request() req, @Param('playlistId') playlistId: string) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.playlistService.findOne(playlistId),
+    };
+  }
+
   // @UseGuards(JwtAuthGuard)
   // @Post('save')
   // async savePlaylistToLibrary(@Request() req, @Body() savePlaylistDto: SavePlaylistDto) {
@@ -94,14 +112,7 @@ export class PlaylistsController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('count')
-  async getUserPlaylistCount(@Request() req) {
-    return {
-      message: GET_SUCCESS,
-      data: await this.playlistService.getNumberOfPlaylistsByUser(req.user.id),
-    };
-  }
+  
 
   // @UseGuards(JwtAuthGuard)
   // @Post('add-album')
