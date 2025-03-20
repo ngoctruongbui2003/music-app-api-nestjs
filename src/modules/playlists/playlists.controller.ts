@@ -1,9 +1,9 @@
 // playlist.controller.ts
-import { Controller, Post, Get, Body, Param, Request, UseGuards, HttpCode, HttpStatus, Patch } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Request, UseGuards, HttpCode, HttpStatus, Patch, Delete } from '@nestjs/common';
 import { PlaylistsService } from './playlists.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AddAlbumDto, AddPlaylistDto, AddTrackDto, AddTracksDto, CreatePlaylistDto } from './dto';
-import { ADD_SUCCESS, CREATE_SUCCESS, GET_SUCCESS } from 'src/constants/server';
+import { ADD_SUCCESS, CREATE_SUCCESS, DELETE_SUCCESS, GET_SUCCESS } from 'src/constants/server';
 
 @Controller('playlists')
 export class PlaylistsController {
@@ -112,11 +112,13 @@ export class PlaylistsController {
     };
   }
 
-  
-
-  // @UseGuards(JwtAuthGuard)
-  // @Post('add-album')
-  // async addAlbumToPlaylist(@Body() addAlbumDto: AddAlbumDto) {
-  //   return this.playlistService.addAlbumToPlaylist(addAlbumDto);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Delete(':playlistId')
+  async deletePlaylist(@Request() req, @Param('playlistId') playlistId: string) {
+    return {
+      message: DELETE_SUCCESS,
+      data: await this.playlistService.deletePlaylist(req.user.id, playlistId)
+    };
+  }
 }

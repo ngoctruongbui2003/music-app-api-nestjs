@@ -47,18 +47,6 @@ export class PlaylistsService {
     return playlist.tracks;
   }
 
-  // async savePlaylistToLibrary(userId: string, savePlaylistDto: SavePlaylistDto) {
-  //   let userLibrary = await this.userLibraryModel.findOne({ user: userId });
-  //   if (!userLibrary) {
-  //     userLibrary = await this.userLibraryModel.create({ user: userId, savedPlaylists: [] });
-  //   }
-  //   if (!userLibrary.savedPlaylists.includes(savePlaylistDto.playlistId)) {
-  //     userLibrary.savedPlaylists.push(savePlaylistDto.playlistId);
-  //     await userLibrary.save();
-  //   }
-  //   return userLibrary;
-  // }
-
   async addTrackToPlaylist(userId: string, addTracksDto: AddTrackDto) {
     const { trackId, playlistId } = addTracksDto;
 
@@ -219,5 +207,18 @@ export class PlaylistsService {
   async getNumberOfPlaylistsByUser(userId: string) {
     const count = await this.playlistModel.countDocuments({ createdBy: convertObjectId(userId) });
     return { count };
+  }
+
+  async deletePlaylist(userId: string, playlistId: string) {
+    // 1. Check if playlist exists
+    const playlist = await this.playlistModel.findById(playlistId);
+    if (!playlist) throw new BadRequestException(PLAYLIST_NOT_FOUND);
+
+    // 2. Check created by is the same as the user
+    const isSameCreator = playlist.createdBy.toString() === userId;
+    if (!isSameCreator) throw new BadRequestException('You are not allowed to delete this playlist');
+
+    // 3. Delete the playlist
+    return await this.playlistModel.findByIdAndDelete(playlistId);
   }
 }
