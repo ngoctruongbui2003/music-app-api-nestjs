@@ -88,4 +88,17 @@ export class UserLibraryController {
             data: await this.userLibraryService.toggleFavourite(req.user.id, itemId, type, isFavourite === 'true')
         };
     }
+
+    @Get(':type/:itemId/is-favourite')
+    @HttpCode(HttpStatus.OK)
+    async isItemInFavourite(
+        @Request() req,
+        @Param('type') type: LibraryItemType,
+        @Param('itemId') itemId: string
+    ) {
+        return {
+            message: GET_SUCCESS,
+            data: await this.userLibraryService.isItemInFavourite(req.user.id, itemId, type)
+        };
+    }
 }

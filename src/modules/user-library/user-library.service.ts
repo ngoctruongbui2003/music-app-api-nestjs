@@ -30,9 +30,9 @@ export class UserLibraryService {
 
     async toggleFavourite<T extends LibraryItemType>(userId: string, itemId: string, type: T, isFavourite: boolean) {
         const userLibrary = await this.repository.findOrCreate(userId);
-        const savedItems = userLibrary[`saved${type}s`];
+        const savedItems: Array<{ [key: string]: any; isFavourite: boolean }> = userLibrary[`saved${type}s`] || [];
 
-        const itemIndex = savedItems.findIndex(item => item[`${type.toLowerCase()}Id`].toString() === itemId);
+        const itemIndex = savedItems.findIndex((item: { [key: string]: any }) => item[`${type.toLowerCase()}Id`].toString() === itemId);
         if (itemIndex === -1) {
             throw new BadRequestException(`${type} not found in user library!`);
         }
@@ -40,6 +40,14 @@ export class UserLibraryService {
         savedItems[itemIndex].isFavourite = isFavourite;
         await userLibrary.save();
         return userLibrary;
+    }
+
+    async isItemInFavourite<T extends LibraryItemType>(userId: string, itemId: string, type: T): Promise<boolean> {
+        const userLibrary = await this.repository.findOrCreate(userId);
+        const savedItems = userLibrary[`saved${type}s`];
+
+        const item = savedItems.find(item => item[`${type.toLowerCase()}Id`].toString() === itemId);
+        return item ? item.isFavourite : false;
     }
     
     async getSavedItems<T extends LibraryItemType>(userId: string, type: T, paginationDto: PaginationDto) {
