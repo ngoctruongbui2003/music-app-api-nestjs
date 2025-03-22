@@ -67,6 +67,18 @@ export class TracksController {
     }
   }
 
+  @Post('featured/artist/:artistId')
+  async getFeaturedTracksByArtist(
+    @Param('artistId') artistId: string,
+    @Body() paginationTrackDto: PaginationTrackDto
+  ) {
+    return {
+      message: GET_SUCCESS,
+      data: await this.tracksService.getFeaturedTracksByArtist(artistId, paginationTrackDto),
+    }
+  }
+  
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
     return this.tracksService.update(+id, updateTrackDto);

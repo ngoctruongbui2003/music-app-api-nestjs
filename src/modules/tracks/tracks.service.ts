@@ -182,6 +182,39 @@ export class TracksService {
     return latestTrack[0];
   }
 
+  async getFeaturedTracksByArtist(artistId: string, paginationTrackDto: PaginationTrackDto) {
+    const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = paginationTrackDto;
+    const skip = (page - 1) * limit;
+    let newSelect = select;
+    if (isPopulateCollaborators) {
+      newSelect = newSelect + ' collaborators';
+    }
+
+    const tracks = await this.trackModel
+                .find({
+                  collaborators: artistId,
+                })
+                .select(newSelect)
+                .populate(isPopulateAlbum ? 'album' : '')
+                .populate(isPopulateCreator ? 'creator' : '')
+                .sort(sort)
+                .skip(skip)
+                .limit(limit)
+                .lean();
+
+    let tracksJSON = JSON.parse(JSON.stringify(tracks));
+
+    if (isPopulateCollaborators) {
+      tracksJSON = await this.populateCollaboratorsByMany(tracksJSON);
+    }
+
+    return {
+      page: page && +page,
+      limit: limit && +limit,
+      data: tracksJSON,
+    };
+  }
+
   async getTracksByAlbum(albumId: string, paginationTrackDto: PaginationTrackDto = {}) {
     const { page, limit, sort, select, isPopulateAlbum, isPopulateCreator, isPopulateCollaborators } = paginationTrackDto;
     const skip = (page - 1) * limit;
