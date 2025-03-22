@@ -62,6 +62,19 @@ export class UserLibraryController {
         };
     }
 
+    @Post(':type/:itemId/favourite')
+    @HttpCode(HttpStatus.OK)
+    async addItemFavourite(
+        @Request() req, 
+        @Param('type') type: LibraryItemType, 
+        @Param('itemId') itemId: string
+    ) {
+        return {
+            message: GET_SUCCESS,
+            data: await this.userLibraryService.addToLibrary(req.user.id, itemId, type, true)
+        };
+    }
+
     @Patch('remove/:type/:itemId')
     @HttpCode(HttpStatus.OK)
     async removeItem(
